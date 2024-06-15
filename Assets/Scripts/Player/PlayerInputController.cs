@@ -49,14 +49,6 @@ public class PlayerInputController : MonoBehaviour
             playerInput.BluePlayerMovement.Enable();
         }
     }
-    void Start()
-    {
-        
-    }
+ 
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

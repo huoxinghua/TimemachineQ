@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     protected bool isJumping = false;
     protected bool isGrounded = false;
 
+
+    private float fallMultiplier;
+    private float lowJumpMultiplier;
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -57,7 +60,7 @@ public class PlayerController : MonoBehaviour
                 isJumping = true;
                 
             }
-            Debug.Log("get rb" + rb.name);
+            
         }
      
         
@@ -66,4 +69,25 @@ public class PlayerController : MonoBehaviour
     {
         isJumping = false;
     }
+    private void FixedUpdate()
+    {
+        if(rb != null)
+        {
+            Debug.Log("get rb" + rb.name);
+            //is falling
+            if (rb.velocity.y < 0)
+            {
+                rb.velocity += Vector2.up * (Physics2D.gravity.y * Time.fixedDeltaTime * fallMultiplier);
+            }
+            //is up,but not holding the jump button
+            else if (rb.velocity.y > 0 && !isJumping)
+            {
+                rb.velocity += Vector2.up * (Physics2D.gravity.y * Time.fixedDeltaTime * lowJumpMultiplier);
+            }
+            rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
+        }
+     
+        
+    }
 }
+
