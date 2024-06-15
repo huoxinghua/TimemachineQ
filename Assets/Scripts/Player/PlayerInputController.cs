@@ -20,9 +20,9 @@ public class PlayerInputController : MonoBehaviour
         if (playerInput != null)
         {
             Debug.Log("get playerInput" + playerInput);
-            playerInput.RedPlayerMovement.Move.performed += (val) => playerController.Move(val.ReadValue<Vector2>());
+            playerInput.RedPlayerMovement.Move.performed += (val) => playerController.Move(val.ReadValue<float>());
         }
-        //playerInput.Enable();
+        playerInput.Enable();
 
     }
     void Start()

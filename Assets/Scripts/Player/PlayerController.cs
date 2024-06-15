@@ -5,13 +5,17 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] protected float speed = 50.0f;
+    [SerializeField] protected float speed = 5.0f;
     #region Private Variables
     private Rigidbody2D rb;
     private Vector2 movementVector;
     #endregion
-    // Start is called before the first frame update
-    void Start()
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+        void Start()
     {
         
     }
@@ -21,9 +25,17 @@ public class PlayerController : MonoBehaviour
     {
         
     }
-    public virtual void Move(Vector2 movement)
+    public virtual void Move(float movement)
     {
-        Debug.Log("move in player controller");
-        this.movementVector.x = movement.x;
+        this.movementVector.x = movement;
+        if (rb != null)
+        {
+
+            // Calculate velocity
+            Vector2 velocity = new Vector2(this.movementVector.x * speed, rb.velocity.y);
+
+            // Apply velocity to the Rigidbody2D
+            rb.velocity = velocity;
+        }
     }
 }
