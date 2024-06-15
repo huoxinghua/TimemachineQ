@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "8e1fee0c-f01f-4224-ab84-c2ae78fea39b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -48,26 +57,37 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b321b10d-37f1-438b-86de-95398ce09053",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
         {
             "name": "BluePlayerMovement",
-            "id": "b0a07f68-3279-44ac-a313-6c3df9662243",
+            "id": "5843ad81-53a3-41b8-aaea-486356dcf49c",
             "actions": [
                 {
-                    "name": "New action",
-                    "type": "Button",
-                    "id": "741fd93a-fffd-43f1-9dbe-ab3cbf7e2eb6",
-                    "expectedControlType": "Button",
+                    "name": "Move",
+                    "type": "PassThrough",
+                    "id": "fb088640-ff85-4253-879a-6999d9c15529",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Move",
-                    "type": "PassThrough",
-                    "id": "ff0a0972-9306-4bc0-a787-674c51828f86",
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "91b2654f-62e6-457b-a85b-8bd31ffe865c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -76,30 +96,8 @@
             ],
             "bindings": [
                 {
-                    "name": "",
-                    "id": "99f7feb4-4d1e-4b6f-9966-08c9b9a3a512",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "New action",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "61103d77-2dd5-4167-9d2c-88e47606e092",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
                     "name": "1D Axis",
-                    "id": "2646febd-5872-4698-84c4-2c58e2f1d861",
+                    "id": "ca603202-b6c8-41f9-9f3b-a841c7a5e759",
                     "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
@@ -110,8 +108,8 @@
                 },
                 {
                     "name": "negative",
-                    "id": "43343a67-0c66-4ee2-8462-e43992650cb3",
-                    "path": "",
+                    "id": "3ab46566-36cc-410c-9095-dc1e287efea8",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -121,14 +119,25 @@
                 },
                 {
                     "name": "positive",
-                    "id": "6b9b2734-8ae2-4444-888d-f9fad4b7831e",
-                    "path": "",
+                    "id": "52cfc02f-1f58-4646-a955-b5939db9d97e",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "bafaf68a-0944-48cc-87d2-ee3c2faebf09",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

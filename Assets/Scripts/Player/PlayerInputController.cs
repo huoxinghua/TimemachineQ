@@ -21,6 +21,8 @@ public class PlayerInputController : MonoBehaviour
         {
             Debug.Log("get playerInput" + playerInput);
             playerInput.RedPlayerMovement.Move.performed += (val) => playerController.Move(val.ReadValue<float>());
+            playerInput.RedPlayerMovement.Jump.performed += (Val) => playerController.Jump();
+            playerInput.RedPlayerMovement.Jump.canceled += (val) => playerController.JumpReleased();
         }
         playerInput.Enable();
 

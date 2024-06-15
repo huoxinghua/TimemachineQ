@@ -11,9 +11,16 @@ public class PlayerController : MonoBehaviour
     private Vector2 movementVector;
     #endregion
 
+    [Header("Jump")]
+    [SerializeField] float jumpVelocity = 5f;
+    protected GroundCheck groundCheck;
+    protected bool isJumping = false;
+    protected bool isGrounded = false;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        groundCheck = GetComponent<GroundCheck>();
     }
         void Start()
     {
@@ -25,7 +32,7 @@ public class PlayerController : MonoBehaviour
     {
         
     }
-    public virtual void Move(float movement)
+    public void Move(float movement)
     {
         this.movementVector.x = movement;
         if (rb != null)
@@ -37,5 +44,26 @@ public class PlayerController : MonoBehaviour
             // Apply velocity to the Rigidbody2D
             rb.velocity = velocity;
         }
+    }
+    public void Jump()
+    {
+        Debug.Log("Jump");
+        if( rb != null )
+        {
+            if (!isJumping && (groundCheck.IsGrounded))
+
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
+                isJumping = true;
+                
+            }
+            Debug.Log("get rb" + rb.name);
+        }
+     
+        
+    }
+    public void JumpReleased()
+    {
+        isJumping = false;
     }
 }
