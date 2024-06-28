@@ -44,6 +44,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""ae8e0644-b7f9-4581-9d52-561ee6701002"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -90,6 +99,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea819a63-4c06-477a-bbd3-d1de32742903"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -110,6 +130,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""91b2654f-62e6-457b-a85b-8bd31ffe865c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""03832854-79cf-4ca7-87c4-75c34945f08b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -160,6 +189,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""15490c2d-0c7e-483f-9815-2354f401ecd9"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -170,10 +210,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_RedPlayerMovement = asset.FindActionMap("RedPlayerMovement", throwIfNotFound: true);
         m_RedPlayerMovement_Move = m_RedPlayerMovement.FindAction("Move", throwIfNotFound: true);
         m_RedPlayerMovement_Jump = m_RedPlayerMovement.FindAction("Jump", throwIfNotFound: true);
+        m_RedPlayerMovement_Shoot = m_RedPlayerMovement.FindAction("Shoot", throwIfNotFound: true);
         // BluePlayerMovement
         m_BluePlayerMovement = asset.FindActionMap("BluePlayerMovement", throwIfNotFound: true);
         m_BluePlayerMovement_Move = m_BluePlayerMovement.FindAction("Move", throwIfNotFound: true);
         m_BluePlayerMovement_Jump = m_BluePlayerMovement.FindAction("Jump", throwIfNotFound: true);
+        m_BluePlayerMovement_Shoot = m_BluePlayerMovement.FindAction("Shoot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -237,12 +279,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private List<IRedPlayerMovementActions> m_RedPlayerMovementActionsCallbackInterfaces = new List<IRedPlayerMovementActions>();
     private readonly InputAction m_RedPlayerMovement_Move;
     private readonly InputAction m_RedPlayerMovement_Jump;
+    private readonly InputAction m_RedPlayerMovement_Shoot;
     public struct RedPlayerMovementActions
     {
         private @PlayerInput m_Wrapper;
         public RedPlayerMovementActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_RedPlayerMovement_Move;
         public InputAction @Jump => m_Wrapper.m_RedPlayerMovement_Jump;
+        public InputAction @Shoot => m_Wrapper.m_RedPlayerMovement_Shoot;
         public InputActionMap Get() { return m_Wrapper.m_RedPlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -258,6 +302,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
         }
 
         private void UnregisterCallbacks(IRedPlayerMovementActions instance)
@@ -268,6 +315,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
         }
 
         public void RemoveCallbacks(IRedPlayerMovementActions instance)
@@ -291,12 +341,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private List<IBluePlayerMovementActions> m_BluePlayerMovementActionsCallbackInterfaces = new List<IBluePlayerMovementActions>();
     private readonly InputAction m_BluePlayerMovement_Move;
     private readonly InputAction m_BluePlayerMovement_Jump;
+    private readonly InputAction m_BluePlayerMovement_Shoot;
     public struct BluePlayerMovementActions
     {
         private @PlayerInput m_Wrapper;
         public BluePlayerMovementActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_BluePlayerMovement_Move;
         public InputAction @Jump => m_Wrapper.m_BluePlayerMovement_Jump;
+        public InputAction @Shoot => m_Wrapper.m_BluePlayerMovement_Shoot;
         public InputActionMap Get() { return m_Wrapper.m_BluePlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -312,6 +364,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
         }
 
         private void UnregisterCallbacks(IBluePlayerMovementActions instance)
@@ -322,6 +377,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
         }
 
         public void RemoveCallbacks(IBluePlayerMovementActions instance)
@@ -343,10 +401,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
     public interface IBluePlayerMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
 }
