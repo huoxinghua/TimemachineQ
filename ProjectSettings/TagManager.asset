@@ -3,15 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - RedPlayer
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 
@@ -40,4 +41,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: backGround
+    uniqueID: 4113733859
+    locked: 0
+  - name: Player
+    uniqueID: 2606513095
+    locked: 0
+  - name: ground
+    uniqueID: 570859357
+    locked: 0
+  - name: Frame
+    uniqueID: 3905365039
+    locked: 0
+  - name: Element
+    uniqueID: 288980737
     locked: 0
