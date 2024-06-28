@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    Rigidbody2D _rb;
+
+    private Shoot weapon;
+
     [Header("Movement")]
     [SerializeField] protected float speed = 5.0f;
     #region Private Variables
@@ -17,6 +21,12 @@ public class PlayerController : MonoBehaviour
     protected bool isJumping = false;
     protected bool isGrounded = false;
 
+    [Header("Weapons")]
+    [SerializeField]
+    private Shoot gun;
+    [SerializeField]
+    private Transform gunLocation;
+
 
     private float fallMultiplier;
     private float lowJumpMultiplier;
@@ -24,6 +34,11 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         groundCheck = GetComponent<GroundCheck>();
+        _rb = GetComponent<Rigidbody2D>();
+        if (gun && gunLocation) 
+        {
+            weapon = Instantiate(gun, gunLocation);
+        }
     }
         void Start()
     {
@@ -89,5 +104,16 @@ public class PlayerController : MonoBehaviour
      
         
     }
+
+    public  void AttachToParent(Transform newParent)
+    {
+        this.transform.parent = newParent;
+    }
+
+    public void PlayerShoot()
+    {
+        weapon?.GunShoot(_rb.velocity);
+    }
+
 }
 

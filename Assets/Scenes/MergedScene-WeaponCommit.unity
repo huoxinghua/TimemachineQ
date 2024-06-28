@@ -1157,6 +1157,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< Updated upstream
+=======
+--- !u!114 &1642585230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1642585224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7695792a0a554f8e875c3f42249447e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movePoints:
+  - {fileID: 1086278360}
+  - {fileID: 638020756}
+  moveSpeed: 1
+  _currentTargetPosition: 0
+  _nextTargetPosition: 1
 --- !u!1 &1717199379
 GameObject:
   m_ObjectHideFlags: 0
@@ -1188,6 +1208,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 667519217}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+>>>>>>> Stashed changes
 --- !u!1 &1917067784
 GameObject:
   m_ObjectHideFlags: 0
@@ -1414,5 +1435,10 @@ SceneRoots:
   - {fileID: 667519217}
   - {fileID: 1113599446}
   - {fileID: 1917067786}
+<<<<<<< Updated upstream
   - {fileID: 1642585229}
+=======
+  - {fileID: 900131107}
+  - {fileID: 2147366043}
   - {fileID: 1419712722}
+>>>>>>> Stashed changes

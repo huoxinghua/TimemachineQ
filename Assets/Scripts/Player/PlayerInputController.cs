@@ -30,12 +30,14 @@ public class PlayerInputController : MonoBehaviour
             playerInput.RedPlayerMovement.Move.performed += (val) => playerController.Move(val.ReadValue<float>());
             playerInput.RedPlayerMovement.Jump.performed += (Val) => playerController.Jump();
             playerInput.RedPlayerMovement.Jump.canceled += (val) => playerController.JumpReleased();
+            playerInput.RedPlayerMovement.Shoot.started += i => playerController.PlayerShoot();
             }
             else if (playerType == PlayerType.BluePlayer) 
             {
                 playerInput.BluePlayerMovement.Move.performed += (val) => playerController.Move(val.ReadValue<float>());
                 playerInput.BluePlayerMovement.Jump.performed += (Val) => playerController.Jump();
                 playerInput.BluePlayerMovement.Jump.canceled += (val) => playerController.JumpReleased();
+                playerInput.BluePlayerMovement.Shoot.started += i => playerController.PlayerShoot();
             }
 
         }
