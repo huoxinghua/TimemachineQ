@@ -25,6 +25,6 @@ public class Shoot : MonoBehaviour
 
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>(); //we create a new copy of a bullet and then we get its rigid body
         rb.velocity = additionalVelocity;
-        rb?.AddForce(firePoint.up * bulletForce, ForceMode2D.Impulse);
+        rb?.AddForce(firePoint.right * bulletForce, ForceMode2D.Impulse);
     }
 }
