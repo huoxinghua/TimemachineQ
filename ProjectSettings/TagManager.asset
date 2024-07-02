@@ -57,3 +57,6 @@ TagManager:
   - name: Element
     uniqueID: 288980737
     locked: 0
+  - name: Collectable
+    uniqueID: 928451677
+    locked: 0
