@@ -14,8 +14,9 @@ public class Bullet : PoolObject
     {
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = transform.right * speed;
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        poolmanager.DeSpawn(this);
+        void OnCollisionEnter2D(Collision2D other)
+        {
+            //  poolmanager.DeSpawn(this);
+        }
     }
 }
