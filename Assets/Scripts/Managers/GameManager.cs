@@ -24,8 +24,7 @@ public class GameManager : Singleton<GameManager>
         //show Cursor
         Debug.Log("you died");
         pauseOverMenu.SetActive(true);
-        //winMenu.SetActive(true);
-        //Time.timeScale = 0;
+        Time.timeScale = 0;
         // ShowRestartMenu();
 
         //Cursor.lockState = CursorLockMode.None;
@@ -40,7 +39,7 @@ public class GameManager : Singleton<GameManager>
 
         
     }
-    void QuitGame()
+    public void QuitGame()
     {
        Application.Quit();
     }

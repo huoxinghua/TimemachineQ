@@ -8,6 +8,7 @@ TagManager:
   - Switch
   - PoolManager
   - BluePlayer
+  - RedWater
   layers:
   - Default
   - TransparentFX
@@ -60,9 +61,9 @@ TagManager:
   - name: Collectable
     uniqueID: 928451677
     locked: 0
-  - name: Water
-    uniqueID: 3858124209
-    locked: 0
   - name: Player
     uniqueID: 2606513095
+    locked: 0
+  - name: Water
+    uniqueID: 3858124209
     locked: 0

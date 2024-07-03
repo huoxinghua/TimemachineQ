@@ -37,14 +37,7 @@ public class SwitchButtonController : MonoBehaviour
         Debug.Log(" downPos" + _switchDownPos);
      
     }
- 
 
-    void Update()
-    {
-
-
-       
-    }
     public void ToggleSwitch()
     {
       
@@ -56,6 +49,7 @@ public class SwitchButtonController : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, _switchDownPos, _switchSpeed);
             ToggleSwitch();
+            isPressedSwitch = true;
         } 
     }
     private void MoveSwitchUp()
@@ -63,25 +57,29 @@ public class SwitchButtonController : MonoBehaviour
         if (isPressedSwitch)
         {
             transform.position = Vector3.MoveTowards(transform.position, _switchUpPos, _switchSpeed );
-            elevator.StopElevator();
+            isPressedSwitch = false;
         }
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
     {  
-        if(collision.CompareTag("BluePlayer") || collision.CompareTag("RedPlayer"))
-        {
+      
             Debug.Log("hit player");
             MoveSwitchDown();
-        }
+        
     }
     
     
     private void OnTriggerExit2D(Collider2D collision)
     {
-        MoveSwitchUp();
-        // StartCoroutine(SwitchUpDelay(_switchDelay));
-        elevator.StartMoving();
+        if (collision.CompareTag("BluePlayer") || collision.CompareTag("RedPlayer"))
+        {
+            Debug.Log("player leave");
+            MoveSwitchUp();
+        }
+        
+         StartCoroutine(SwitchUpDelay(_switchDelay));
+      
     }
     IEnumerator SwitchUpDelay(float waitTime)
     {

@@ -24,11 +24,7 @@ public class Water : MonoBehaviour
             rb = playerController.GetComponent<Rigidbody2D>();
         }
         rb = GetComponent<Rigidbody2D>();
-
-        //UI menu to hide
-       
-
-       // gameManager = new GameManager();
+     
     }
 
     private WaterType[] GetWaterType()
@@ -46,7 +42,7 @@ public class Water : MonoBehaviour
 
              foreach (WaterType var in waterType)
              {
-                 if(var == WaterType.RedWater)
+                 if((var == WaterType.RedWater))
                  {
                     GameManager.Instance.PlayerDied();
                     Debug.Log("kill Blue player");
