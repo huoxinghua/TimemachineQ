@@ -48,9 +48,6 @@ TagManager:
   - name: backGround
     uniqueID: 4113733859
     locked: 0
-  - name: Player
-    uniqueID: 2606513095
-    locked: 0
   - name: ground
     uniqueID: 570859357
     locked: 0
@@ -65,4 +62,7 @@ TagManager:
     locked: 0
   - name: Water
     uniqueID: 3858124209
+    locked: 0
+  - name: Player
+    uniqueID: 2606513095
     locked: 0

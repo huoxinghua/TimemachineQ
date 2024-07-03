@@ -9,7 +9,6 @@ public class Bullet : PoolObject
 {
     public float speed;
     private Rigidbody2D rb;
-    //private PoolManager poolManager;
    
 
     private void Start()
