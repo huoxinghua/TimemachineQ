@@ -13,7 +13,7 @@ public class Shoot : MonoBehaviour
     string bulletPoolName;
 
     [SerializeField]
-    float bulletForce = 15f;
+    float bulletForce = 10f;
 
     // Update is called once per frame
     public virtual void GunShoot(Vector2 additionalVelocity = new Vector2())
@@ -25,6 +25,6 @@ public class Shoot : MonoBehaviour
 
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>(); //we create a new copy of a bullet and then we get its rigid body
         rb.velocity = additionalVelocity;
-        rb?.AddForce(firePoint.up * bulletForce, ForceMode2D.Impulse);
+        rb?.AddForce(firePoint.forward * bulletForce, ForceMode2D.Impulse);
     }
 }

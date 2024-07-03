@@ -9,23 +9,20 @@ public class Bullet : PoolObject
 {
     public float speed;
     private Rigidbody2D rb;
-    private PoolManager poolManager;
+    //private PoolManager poolManager;
    
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = transform.right * speed;
-
-        //get PoolManager reference
-        poolManager =new PoolManager();
     }
     //if the bullet hit something destroy himself
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision != null)
         {
-            poolManager.DeSpawn(this);
+            PoolManager.Instance.DeSpawn(this);
         }  
     }
 }

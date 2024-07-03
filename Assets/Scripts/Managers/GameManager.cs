@@ -5,15 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-     private GameObject gameOverMenu;
-    // Start is called before the first frame update
+    [SerializeField] GameObject pauseOverMenu;
+    [SerializeField] GameObject winMenu;
+
     void Start()
     {
-        gameOverMenu.SetActive(false);
-             
+        Debug.Log("GameManager start");
+       // pauseOverMenu.SetActive(true);
+
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -21,9 +22,12 @@ public class GameManager : Singleton<GameManager>
     public void PlayerDied()
     {
         //show Cursor
-        Debug.Log("Player Died show pause menu");
+        Debug.Log("you died");
+        pauseOverMenu.SetActive(true);
+        //winMenu.SetActive(true);
         //Time.timeScale = 0;
-        gameOverMenu.SetActive(true);
+        // ShowRestartMenu();
+
         //Cursor.lockState = CursorLockMode.None;
         //Cursor.visible = true;
     }
@@ -39,5 +43,11 @@ public class GameManager : Singleton<GameManager>
     void QuitGame()
     {
        Application.Quit();
+    }
+    public void ShowRestartMenu()
+    {
+        Debug.Log("show pause menu");
+        gameObject.SetActive(true);
+
     }
 }

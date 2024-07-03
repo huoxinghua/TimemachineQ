@@ -13,7 +13,7 @@ public class Water : MonoBehaviour
     private GameManager gameManager;
 
     #region  UI when die player
-    [SerializeField] private RestartMenu restartMenu;
+    [SerializeField] private GameObject pauseMenu;
     #endregion
 
     private void Start()
@@ -26,9 +26,9 @@ public class Water : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         //UI menu to hide
-        restartMenu = GetComponent<RestartMenu>();
+       
 
-        gameManager = new GameManager();
+       // gameManager = new GameManager();
     }
 
     private WaterType[] GetWaterType()
@@ -48,7 +48,7 @@ public class Water : MonoBehaviour
              {
                  if(var == WaterType.RedWater)
                  {
-                    gameManager.PlayerDied();
+                    GameManager.Instance.PlayerDied();
                     Debug.Log("kill Blue player");
                  }
              }
@@ -60,7 +60,7 @@ public class Water : MonoBehaviour
                  if (var == WaterType.BlueWater)
                  {
                     Debug.Log("kill red player");
-                    gameManager.PlayerDied();
+                    GameManager.Instance.PlayerDied();
                 }
              }
 
