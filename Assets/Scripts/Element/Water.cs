@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Water : MonoBehaviour
 {
@@ -9,53 +10,60 @@ public class Water : MonoBehaviour
     private PlayerController playerController;
     private Rigidbody2D rb;
     public float jumpForce = 10f;
+    private GameManager gameManager;
+
+    #region  UI when die player
+    [SerializeField] private RestartMenu restartMenu;
+    #endregion
 
     private void Start()
     {
         playerController = GetComponent<PlayerController>();
-        if (playerController != null )
+        if (playerController != null)
         {
             rb = playerController.GetComponent<Rigidbody2D>();
         }
         rb = GetComponent<Rigidbody2D>();
+
+        //UI menu to hide
+        restartMenu = GetComponent<RestartMenu>();
+
+        gameManager = new GameManager();
+    }
+
+    private WaterType[] GetWaterType()
+    {
+        return waterType;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("RedPlayer"))
+       
+        if (collision.gameObject.CompareTag("BluePlayer"))
         {
-            foreach (WaterType waterType in waterType)
-            {
-                if(waterType == WaterType.BlueWater)
-                {
-                    Debug.Log(" red water die player ");
+           
+            //PlayerController.D
+
+             foreach (WaterType var in waterType)
+             {
+                 if(var == WaterType.RedWater)
+                 {
+                    gameManager.PlayerDied();
+                    Debug.Log("kill Blue player");
+                 }
+             }
+         }
+         else if (collision.gameObject.CompareTag("RedPlayer"))
+         {
+             foreach (WaterType var in waterType)
+             {
+                 if (var == WaterType.BlueWater)
+                 {
+                    Debug.Log("kill red player");
+                    gameManager.PlayerDied();
                 }
-            }
+             }
 
-               
-
-        }
-        else if(collision.gameObject.layer == LayerMask.NameToLayer("BluePlayer"))
-        {
-
-
-            foreach (WaterType waterType in waterType)
-            {
-                if (waterType == WaterType.RedWater)
-                {
-                    Debug.Log(" blue water die player ");
-                }
-            }
-
-        }
-
+         }
     }
-
-    private void Die(PlayerController playerController)
-    {
-        Debug.Log("Player Died in " + waterType);
-        // reload scene or play die animation
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-}
+    } 

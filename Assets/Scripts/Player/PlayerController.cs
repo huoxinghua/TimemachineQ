@@ -86,13 +86,10 @@ public class PlayerController : MonoBehaviour
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
                 isJumping = true;
-                
             }
-            
-        }
-     
-        
+        } 
     }
+
     public void JumpReleased()
     {
         isJumping = false;
@@ -120,7 +117,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    public  void AttachToParent(Transform newParent)
+    public void AttachToParent(Transform newParent)
     {
         this.transform.parent = newParent;
     }
@@ -161,6 +158,11 @@ public class PlayerController : MonoBehaviour
         //isOperate = false;
         Debug.Log("Release Y");
         switchButtonController.ToggleSwitch();
+    }
+   
+    public void Die()
+    {
+        //pause the game 
     }
 }
 

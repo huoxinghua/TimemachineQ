@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class PlayerPushBox : MonoBehaviour
 {
     public float pushForce = 2.0f; // the force to push the box
 
