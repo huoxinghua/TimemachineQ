@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Elevator : MonoBehaviour
+public class MovePlatform : MonoBehaviour
 {
     [SerializeField] Transform[] movePoints;
     [SerializeField] float moveSpeed = 5f;

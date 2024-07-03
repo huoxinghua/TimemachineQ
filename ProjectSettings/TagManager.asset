@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - RedPlayer
+  - Switch
+  - PoolManager
   layers:
   - Default
   - TransparentFX
@@ -13,8 +15,8 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
-  - 
+  - BluePlayer
+  - RedPlayer
   - 
   - 
   - 
@@ -59,4 +61,7 @@ TagManager:
     locked: 0
   - name: Collectable
     uniqueID: 928451677
+    locked: 0
+  - name: Water
+    uniqueID: 3858124209
     locked: 0

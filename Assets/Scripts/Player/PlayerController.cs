@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Transform gunLocation;
 
+    [Header("Operate Elevator")]
+    public bool isOperate;
+    [SerializeField] SwitchButtonController switchButtonController;
 
     private float fallMultiplier;
     private float lowJumpMultiplier;
@@ -40,9 +43,19 @@ public class PlayerController : MonoBehaviour
             weapon = Instantiate(gun, gunLocation);
         }
     }
-        void Start()
+    void Start()
     {
-        
+        // isOperate = false;
+        GameObject switchObject = GameObject.FindGameObjectWithTag("Switch");
+        if (switchObject != null)
+        {
+            switchButtonController = switchObject.GetComponent<SwitchButtonController>();
+        }
+
+        if (switchButtonController == null)
+        {
+            Debug.LogWarning("SwitchButtonController not found or not assigned.");
+        }
     }
 
     // Update is called once per frame
@@ -65,7 +78,7 @@ public class PlayerController : MonoBehaviour
     }
     public void Jump()
     {
-        Debug.Log("Jump");
+       
         if( rb != null )
         {
             if (!isJumping && (groundCheck.IsGrounded))
@@ -88,7 +101,7 @@ public class PlayerController : MonoBehaviour
     {
         if(rb != null)
         {
-            Debug.Log("get rb" + rb.name);
+          
             //is falling
             if (rb.velocity.y < 0)
             {
@@ -105,6 +118,8 @@ public class PlayerController : MonoBehaviour
         
     }
 
+
+
     public  void AttachToParent(Transform newParent)
     {
         this.transform.parent = newParent;
@@ -114,6 +129,38 @@ public class PlayerController : MonoBehaviour
     {
         weapon?.GunShoot(_rb.velocity);
     }
+    //this for the player to perate the elevator
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        // chect if is player
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            Operate();
+        }
 
+
+    }
+    public void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            OperateReleased();
+            Debug.Log("player has leave");
+        }
+
+    }
+
+    //this is for the player operate the elevator
+    public void Operate()
+    {
+        Debug.Log("Get Y");
+        switchButtonController.ToggleSwitch();
+    }
+    public void OperateReleased()
+    {
+        //isOperate = false;
+        Debug.Log("Release Y");
+        switchButtonController.ToggleSwitch();
+    }
 }
 

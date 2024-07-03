@@ -19,9 +19,8 @@ public class PlayerInputController : MonoBehaviour
     
     void OnEnable()
     {
-        Debug.Log("get playerType" + playerType);
         PlayerInput playerInput = new PlayerInput();
-       
+     
         if (playerInput != null)
         {
             if (playerType == PlayerType.RedPlayer)
@@ -40,15 +39,21 @@ public class PlayerInputController : MonoBehaviour
                 playerInput.BluePlayerMovement.Shoot.started += i => playerController.PlayerShoot();
             }
 
+            //this is for the switch to up and down the elevator;both of the player can interact with the switch
+            playerInput.PlayerAction.Operate.performed += (val) => playerController.Operate();
+            playerInput.PlayerAction.Operate.performed += (val) => playerController.OperateReleased();
+
         }
         if (playerType == PlayerType.RedPlayer)
         {
-
             playerInput.RedPlayerMovement.Enable();
+            //thus will make the switch with the elevator Y key work
+            playerInput.PlayerAction.Enable();
         }
         else if (playerType == PlayerType.BluePlayer)
         {
             playerInput.BluePlayerMovement.Enable();
+            playerInput.PlayerAction.Enable();
         }
     }
  
