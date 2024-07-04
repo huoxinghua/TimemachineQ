@@ -64,7 +64,7 @@ public class SwitchButtonController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {  
       
-            Debug.Log("hit player");
+           // Debug.Log("hit player");
             MoveSwitchDown();
         
     }

@@ -61,7 +61,7 @@ public class Elevator : MonoBehaviour
     public void StartMoving()
     {
         StartCoroutine(MoveElevator());
-        Debug.Log("Move in elevator in elevator");
+       // Debug.Log("Move in elevator in elevator");
     }
   
     //another way to try

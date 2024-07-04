@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     public bool isOperate;
     [SerializeField] SwitchButtonController switchButtonController;
 
+   
+
     private float fallMultiplier;
     private float lowJumpMultiplier;
     void Awake()
@@ -65,6 +67,7 @@ public class PlayerController : MonoBehaviour
     }
     public void Move(float movement)
     {
+        Debug.Log("W for jump");
         this.movementVector.x = movement;
         if (rb != null)
         {
@@ -86,9 +89,26 @@ public class PlayerController : MonoBehaviour
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
                 isJumping = true;
+                rb.gravityScale = 1f;
             }
         } 
     }
+    public void MoveUp(float movementUp)
+    {
+        isJumping = false;
+        Debug.Log("Move up");
+        this.movementVector.y = movementUp;
+       // rb.AddForce(new Vector2(0, this.movementVector.y * speed), ForceMode2D.Impulse);
+        Vector2 velocity = new Vector2(rb.velocity.x,this.movementVector.y * speed);
+
+        // Apply the new velocity to the Rigidbody2D component
+        //rb.velocity = new Vector2(rb.velocity.x, speed);
+        rb.velocity = velocity;
+        rb.gravityScale = 0.6f;
+
+    }
+
+
 
     public void JumpReleased()
     {
@@ -126,26 +146,8 @@ public class PlayerController : MonoBehaviour
     {
         weapon?.GunShoot(_rb.velocity);
     }
-    //this for the player to perate the elevator
-    public void OnTriggerEnter2D(Collider2D other)
-    {
-        // chect if is player
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            Operate();
-        }
-
-
-    }
-    public void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            OperateReleased();
-            Debug.Log("player has leave");
-        }
-
-    }
+   
+    
 
     //this is for the player operate the elevator
     public void Operate()

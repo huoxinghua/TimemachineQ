@@ -9,6 +9,7 @@ TagManager:
   - PoolManager
   - BluePlayer
   - RedWater
+  - Stair
   layers:
   - Default
   - TransparentFX
