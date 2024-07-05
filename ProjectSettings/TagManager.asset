@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - RedPlayer
+  - Switch
+  - PoolManager
+  - BluePlayer
+  - RedWater
+  - Stair
   layers:
   - Default
   - TransparentFX
@@ -13,8 +18,8 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
-  - 
+  - BluePlayer
+  - RedPlayer
   - 
   - 
   - 
@@ -45,9 +50,6 @@ TagManager:
   - name: backGround
     uniqueID: 4113733859
     locked: 0
-  - name: Player
-    uniqueID: 2606513095
-    locked: 0
   - name: ground
     uniqueID: 570859357
     locked: 0
@@ -59,4 +61,10 @@ TagManager:
     locked: 0
   - name: Collectable
     uniqueID: 928451677
+    locked: 0
+  - name: Player
+    uniqueID: 2606513095
+    locked: 0
+  - name: Water
+    uniqueID: 3858124209
     locked: 0

@@ -27,6 +27,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Transform gunLocation;
 
+    [Header("Operate Elevator")]
+    public bool isOperate;
+    [SerializeField] SwitchButtonController switchButtonController;
+
+   
 
     private float fallMultiplier;
     private float lowJumpMultiplier;
@@ -40,9 +45,19 @@ public class PlayerController : MonoBehaviour
             weapon = Instantiate(gun, gunLocation);
         }
     }
-        void Start()
+    void Start()
     {
-        
+        // isOperate = false;
+        GameObject switchObject = GameObject.FindGameObjectWithTag("Switch");
+        if (switchObject != null)
+        {
+            switchButtonController = switchObject.GetComponent<SwitchButtonController>();
+        }
+
+        if (switchButtonController == null)
+        {
+            Debug.LogWarning("SwitchButtonController not found or not assigned.");
+        }
     }
 
     // Update is called once per frame
@@ -52,6 +67,7 @@ public class PlayerController : MonoBehaviour
     }
     public void Move(float movement)
     {
+        Debug.Log("W for jump");
         this.movementVector.x = movement;
         if (rb != null)
         {
@@ -65,7 +81,7 @@ public class PlayerController : MonoBehaviour
     }
     public void Jump()
     {
-        Debug.Log("Jump");
+       
         if( rb != null )
         {
             if (!isJumping && (groundCheck.IsGrounded))
@@ -73,13 +89,27 @@ public class PlayerController : MonoBehaviour
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
                 isJumping = true;
-                
+                rb.gravityScale = 1f;
             }
-            
-        }
-     
-        
+        } 
     }
+    public void MoveUp(float movementUp)
+    {
+        isJumping = false;
+        Debug.Log("Move up");
+        this.movementVector.y = movementUp;
+       // rb.AddForce(new Vector2(0, this.movementVector.y * speed), ForceMode2D.Impulse);
+        Vector2 velocity = new Vector2(rb.velocity.x,this.movementVector.y * speed);
+
+        // Apply the new velocity to the Rigidbody2D component
+        //rb.velocity = new Vector2(rb.velocity.x, speed);
+        rb.velocity = velocity;
+        rb.gravityScale = 0.6f;
+
+    }
+
+
+
     public void JumpReleased()
     {
         isJumping = false;
@@ -88,7 +118,7 @@ public class PlayerController : MonoBehaviour
     {
         if(rb != null)
         {
-            Debug.Log("get rb" + rb.name);
+          
             //is falling
             if (rb.velocity.y < 0)
             {
@@ -105,7 +135,9 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    public  void AttachToParent(Transform newParent)
+
+
+    public void AttachToParent(Transform newParent)
     {
         this.transform.parent = newParent;
     }
@@ -114,6 +146,25 @@ public class PlayerController : MonoBehaviour
     {
         weapon?.GunShoot(_rb.velocity);
     }
+   
+    
 
+    //this is for the player operate the elevator
+    public void Operate()
+    {
+        Debug.Log("Get Y");
+        switchButtonController.ToggleSwitch();
+    }
+    public void OperateReleased()
+    {
+        //isOperate = false;
+        Debug.Log("Release Y");
+        switchButtonController.ToggleSwitch();
+    }
+   
+    public void Die()
+    {
+        //pause the game 
+    }
 }
 

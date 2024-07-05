@@ -7,14 +7,21 @@ using UnityEngine.UIElements;
 
 public class Bullet : PoolObject
 {
-    [SerializeField] private PoolManager poolmanager;
+    public float speed;
+    private Rigidbody2D rb;
+   
 
     private void Start()
     {
-        poolmanager = GetComponent<PoolManager>();
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = transform.right * speed;
     }
-    private void OnCollisionEnter2D(Collision2D other)
+    //if the bullet hit something destroy himself
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        poolmanager.DeSpawn(this);
+        if(collision != null)
+        {
+            PoolManager.Instance.DeSpawn(this);
+        }  
     }
 }

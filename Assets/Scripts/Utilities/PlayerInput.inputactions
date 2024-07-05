@@ -180,6 +180,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "PlayerAction",
+            "id": "3ebfb015-ebfb-4b92-a0a5-ab8925d2e796",
+            "actions": [
+                {
+                    "name": "Operate",
+                    "type": "Button",
+                    "id": "500212ed-ad9d-40d5-81c2-314d27f841fe",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7bf41584-ba50-4cf6-97c3-e81fc367678c",
+                    "path": "<Keyboard>/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Operate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
