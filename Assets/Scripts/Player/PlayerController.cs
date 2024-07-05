@@ -31,7 +31,11 @@ public class PlayerController : MonoBehaviour
     public bool isOperate;
     [SerializeField] SwitchButtonController switchButtonController;
 
-   
+    [Header("Stairs")]
+    [SerializeField] private float climbSpeed = 8f;
+        [SerializeField]
+    private bool isLadder = false;
+    private bool isClimbing;
 
     private float fallMultiplier;
     private float lowJumpMultiplier;
@@ -43,6 +47,7 @@ public class PlayerController : MonoBehaviour
         if (gun && gunLocation) 
         {
             weapon = Instantiate(gun, gunLocation);
+            weapon.player = this.gameObject;
         }
     }
     void Start()
@@ -60,11 +65,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
+    
     public void Move(float movement)
     {
         Debug.Log("W for jump");
@@ -77,7 +79,25 @@ public class PlayerController : MonoBehaviour
 
             // Apply velocity to the Rigidbody2D
             rb.velocity = velocity;
+
+            //flipping character
+            if (velocity.x > 0)
+            {
+                gameObject.transform.localScale = new Vector3(1, 1, 1);
+
+            }
+
+            if (velocity.x < 0)
+            {
+                gameObject.transform.localScale = new Vector3(-1, 1, 1);
+            }
+
+  
+         
+            
         }
+
+        
     }
     public void Jump()
     {
@@ -93,9 +113,17 @@ public class PlayerController : MonoBehaviour
             }
         } 
     }
+
+   
     public void MoveUp(float movementUp)
     {
-        isJumping = false;
+        if (!isLadder || movementUp < 0)
+        {
+            isJumping = false;
+            return;
+        }
+
+        isJumping = true;
         Debug.Log("Move up");
         this.movementVector.y = movementUp;
        // rb.AddForce(new Vector2(0, this.movementVector.y * speed), ForceMode2D.Impulse);
@@ -107,8 +135,7 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = 0.6f;
 
     }
-
-
+   
 
     public void JumpReleased()
     {
@@ -165,6 +192,25 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         //pause the game 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Stair"))
+        {
+            Debug.Log("You are about to climb");
+            isLadder = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Stair"))
+        {
+            Debug.Log("You are done climbing");
+            isLadder = false;
+            isClimbing = false;
+        }
     }
 }
 

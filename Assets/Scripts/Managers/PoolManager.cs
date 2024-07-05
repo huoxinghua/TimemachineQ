@@ -1,8 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.EditorTools;
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class PoolManager : Singleton<PoolManager>
 {
@@ -13,33 +12,30 @@ public class PoolManager : Singleton<PoolManager>
     private void Start()
     {
         PoolManager.Instance.Load();
-        
     }
+
     private void Load()
     {
-        //change
-      
-        foreach (var poolObject in poolObjects)
+        foreach (var PoolObject in poolObjects)
         {
-
+            // add the bullets (pool object>) to the dictionary
             Stack<PoolObject> objStack = new Stack<PoolObject>();
-            var newPoolObject = Instantiate(poolObject);
+
+            var newPoolObject = Instantiate(PoolObject);
             newPoolObject.gameObject.SetActive(false);
-            newPoolObject.gameObject.name = poolObject.name;//make sure the name is same with Spawn()
+            newPoolObject.gameObject.name = PoolObject.name;
             objStack.Push(newPoolObject);
 
-            _stackDictionary.Add(poolObject.name, objStack);
+            _stackDictionary.Add(PoolObject.name, objStack);
         }
-        
     }
 
-    public PoolObject Spawn(string objName)
-
+    public PoolObject Spawn(string objName) // "bullet"
     {
+        // look inside the dictionary
         Stack<PoolObject> objStack = _stackDictionary[objName];
 
-
-        if (objStack.Count == 1) 
+        if (objStack.Count == 1) // if the stack has only one object
         {
             PoolObject whatIsInTheStack = objStack.Peek();
             PoolObject newPoolObject = Instantiate(whatIsInTheStack);
@@ -48,23 +44,20 @@ public class PoolManager : Singleton<PoolManager>
             return newPoolObject;
         }
 
+        //If there is more than one object, just remove and return the last object from the stack
         PoolObject lastObjectInTheStack = objStack.Pop();
         lastObjectInTheStack.gameObject.SetActive(true);
         return lastObjectInTheStack;
+
     }
 
     public void DeSpawn(PoolObject poolObject)
     {
-        Debug.Log("destroy bullet");
-        if (!_stackDictionary.ContainsKey(poolObject.name))
-        {
-            Debug.LogError($"Pool with name {poolObject.name}does not exist." );
-            return;
-        }
-        
         Stack<PoolObject> objStack = _stackDictionary[poolObject.name];
+
+        // disable the object and push it into the stack
         poolObject.gameObject.SetActive(false);
         objStack.Push(poolObject);
     }
-}
 
+}
