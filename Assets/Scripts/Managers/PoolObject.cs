@@ -1,18 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class PoolObject : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    protected void DeSpawn()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        PoolManager.Instance.DeSpawn(this);
     }
 }
