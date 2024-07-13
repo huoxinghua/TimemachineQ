@@ -49,14 +49,14 @@ public class MovePlatform : MonoBehaviour
     {
         if(other.collider.GetComponent<PlayerController>())
         {
-            other.collider.GetComponent<PlayerController>().AttachToParent(this.transform);
+           // other.collider.GetComponent<PlayerController>().AttachToParent(this.transform);
         }
     }
     private void OnCollisionExit2D(Collision2D other)
     {
         if (other.collider.GetComponent<PlayerController>())
         {
-            other.collider.GetComponent<PlayerController>().AttachToParent(null);
+          //  other.collider.GetComponent<PlayerController>().AttachToParent(null);
         }
     }
 }
