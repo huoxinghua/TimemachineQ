@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Operate Elevator")]
     public bool isOperate;
-    [SerializeField] SwitchButtonController switchButtonController;
+    [SerializeField] ElevatorSwitch elevatorSwitch;
 
     [Header("Stairs")]
     [SerializeField] private float climbSpeed = 8f;
@@ -56,10 +56,10 @@ public class PlayerController : MonoBehaviour
         GameObject switchObject = GameObject.FindGameObjectWithTag("Switch");
         if (switchObject != null)
         {
-            switchButtonController = switchObject.GetComponent<SwitchButtonController>();
+            elevatorSwitch = switchObject.GetComponent<ElevatorSwitch>();
         }
 
-        if (switchButtonController == null)
+        if (elevatorSwitch == null)
         {
             Debug.LogWarning("SwitchButtonController not found or not assigned.");
         }
@@ -174,21 +174,7 @@ public class PlayerController : MonoBehaviour
         weapon?.GunShoot(_rb.velocity);
     }
    
-    
-
-    //this is for the player operate the elevator
-    public void Operate()
-    {
-        Debug.Log("Get Y");
-        switchButtonController.ToggleSwitch();
-    }
-    public void OperateReleased()
-    {
-        //isOperate = false;
-        Debug.Log("Release Y");
-        switchButtonController.ToggleSwitch();
-    }
-   
+  
     public void Die()
     {
         //pause the game 
