@@ -16,8 +16,8 @@ public class Elevator : MonoBehaviour
     [SerializeField] GameObject elevatorPlatfom;
     private float _minTargetDistance = 0.01f;
     bool _isMoving = false;
-    bool _isInBottom = true;
-    bool _isInTop = true;
+    bool _isInBottom;
+    bool _isInTop;
 
     [SerializeField]  private SwitchButtonController switchButtonController;
     
