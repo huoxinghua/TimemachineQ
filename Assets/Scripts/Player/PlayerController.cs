@@ -33,8 +33,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Stairs")]
     [SerializeField] private float climbSpeed = 8f;
-    private bool isLadder = false;
-    private bool isClimbing;
+    private bool isOnLadder = false;
+    public bool isClimbing;
 
     private float fallMultiplier;
     private float lowJumpMultiplier;
@@ -64,17 +64,37 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (!isOnLadder)
+        {
+            rb.gravityScale = 1f;
+        }
+            
+    }
     private void FixedUpdate()
     {
+        /*
+        if(isLadder)
+        {
+            isClimbing = true;
+            MoveUp(1);
+        }
+        else if(!isLadder)
+        {
+            isClimbing = false;
+            MoveUp(-1);
+        }
+       */
         rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
 
         if (isClimbing)
         {
-            rb.velocity = new Vector2(rb.velocity.x, movementVector.y);
+            rb.velocity = new Vector2(rb.velocity.x, movementVector.y* climbSpeed);
         }
         else if (isGrounded)
         {
-            rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
+            rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);//this is for nomal move
         }
         else
         {
@@ -86,18 +106,11 @@ public class PlayerController : MonoBehaviour
 
     public void Move(float movement)
     {
-        Debug.Log("W for jump");
         isJumping = true;
         this.movementVector.x = movement;
-        if (rb != null)
-        {
-            // Calculate velocity and Apply velocity to the Rigidbody2D
-            Vector2 velocity = new Vector2(this.movementVector.x * speed, rb.velocity.y);
-
-            rb.velocity = velocity;
-        }
     }
 
+    //the player move left and right should be different in visual
     private void HandleVisualFlip()
     {
         if(movementVector.x > 0)
@@ -129,7 +142,6 @@ public class PlayerController : MonoBehaviour
     {
         if (rb != null)
         {
-
             //is falling
             if (rb.velocity.y < 0)
             {
@@ -146,20 +158,15 @@ public class PlayerController : MonoBehaviour
 
     public void MoveUp(float movementUp)
     {
-        if (!isLadder || movementUp < 0)
+        Debug.Log("move up now");
+        Debug.Log("movementUP");
+        if (!isOnLadder || movementUp < 0)
         {
             isJumping = false;
             return;
         }
-
-        isJumping = true;
-        Debug.Log("Move up");
         this.movementVector.y = movementUp;
-        Vector2 velocity = new Vector2(rb.velocity.x,this.movementVector.y * speed);
-
-        // Apply the new velocity to the Rigidbody2D component
-        rb.velocity = velocity;
-        rb.gravityScale = 0.6f;
+        rb.gravityScale = 0f;
 
     }
    
@@ -168,8 +175,6 @@ public class PlayerController : MonoBehaviour
     {
         isJumping = false;
     }
-    
-
 
     public void AttachToParent(Transform newParent)
     {
@@ -192,7 +197,7 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Stair"))
         {
             Debug.Log("You are about to climb");
-            isLadder = true;
+            isOnLadder = true;
         }
     }
 
@@ -201,7 +206,7 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Stair"))
         {
             Debug.Log("You are done climbing");
-            isLadder = false;
+            isOnLadder = false;
             isClimbing = false;
         }
     }
