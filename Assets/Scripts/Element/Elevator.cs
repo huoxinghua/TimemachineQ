@@ -3,113 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Elevator : MonoBehaviour
-{
-    [SerializeField] Transform[] movePoints;
-    [SerializeField] Transform bottomPoint;
+{   
     [SerializeField] Transform topPoint;
-    [SerializeField] private int _currentTargetPosition = 0;
-    [SerializeField] private int _nextTargetPosition = 1;
-    [SerializeField] GameObject topSwitch;
-    [SerializeField] GameObject bottomSwitch;
+    private Vector3 targetPosition;
+    private Vector3 initialPosition;
     [SerializeField] float moveSpeed = 5f;
 
-    [SerializeField] GameObject elevatorPlatfom;
-    private float _minTargetDistance = 0.01f;
     bool _isMoving = false;
-    bool _isInBottom;
-    bool _isInTop;
-
-    [SerializeField]  private SwitchButtonController switchButtonController;
-    
+   
 
     void Start()
     {
-        //elevatorPlatfom.transform.position = bottomPoint.transform.position;
-        _isInBottom = true;
+        targetPosition = topPoint.position;
+        initialPosition = transform.position;
 
-        //find ref of switch
-      
-        switchButtonController = GetComponentInChildren<SwitchButtonController>();
-       
+
     }
-    public IEnumerator MoveElevator()
+    
+    private void Update()
     {
-        float alpha = 0.0f;
-        while (true)
+        if (_isMoving)
         {
-            alpha += Time.fixedDeltaTime * moveSpeed;
-            if ((1.0f - alpha) < _minTargetDistance)
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            Debug.Log($"Elevator position: {transform.position}, Target position: {targetPosition}");
+            if (Vector3.Distance(transform.position,targetPosition)<0.1f)
             {
-                _nextTargetPosition++;
-                _currentTargetPosition++;
-                _nextTargetPosition %= movePoints.Length;
-                _currentTargetPosition %= movePoints.Length;
-                alpha = 1f;
+                _isMoving = false;
             }
-           
-                elevatorPlatfom.transform.position = Vector3.Lerp(
-                movePoints[_currentTargetPosition].transform.position,
-                movePoints[_nextTargetPosition].transform.position, alpha
-                    );
-           
-
-            
-            yield return new WaitForFixedUpdate();
-        }
-
-    }
-    public void StartMoving()
-    {
-        StartCoroutine(MoveElevator());
-       // Debug.Log("Move in elevator in elevator");
-    }
-  
-    //another way to try
-    // this.transform.position = movePoints[_currentTargetPosition].transform.position;
-    
-    /*
-    float alpha = 0.0f;
-
-    void FixedUpdate()
-    {
-       
-        if (switchButtonController.isPressedSwitch)
-        {
-            alpha += Time.deltaTime * moveSpeed;  
-            alpha = Mathf.Clamp01(alpha);
-
-            StartMoving();
         }
     }
-    
-    public void StartMoving()
+    public void MoveToTop()
     {
-        Debug.Log("move now");
-        elevatorPlatfom.transform.position = Vector3.Lerp(
-               topPoint.transform.position,
-               bottomPoint.transform.position,
-              1f);
-      /*  if (elevatorPlatfom.transform.position == topPoint.position)
-        {
-            elevatorPlatfom.transform.position = Vector3.Lerp(
-                topPoint.transform.position,
-                bottomPoint.transform.position,
-               1f);
-        }
-        else if (elevatorPlatfom.transform.position == bottomPoint.position)
-        {
-            elevatorPlatfom.transform.position = Vector3.Lerp(
-               bottomPoint.transform.position,
-               topPoint.transform.position,
-              1f);
-        }
-      
+        
+        targetPosition = topPoint.position;
+        _isMoving = true;
     }
 
-    public void StopElevator()
+    public void MoveToInitial()
     {
-      
-    }*/
+        targetPosition = initialPosition;
+        _isMoving = true;
+    }
 
 
     private void OnCollisionEnter2D(Collision2D other)
