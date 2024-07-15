@@ -9,6 +9,9 @@ public class Shoot : MonoBehaviour
     Transform firePoint;
 
     [SerializeField]
+    PlayerController playerController;
+
+    [SerializeField]
     string bulletPoolName;
 
     [SerializeField]
@@ -17,19 +20,28 @@ public class Shoot : MonoBehaviour
     [SerializeField]
     public GameObject player;
     // Update is called once per frame
+    private void Start()
+    {
+       playerController = GameObject.FindObjectOfType<PlayerController>();
+        
+
+    }
+
     public virtual void GunShoot(Vector2 additionalVelocity = new Vector2())
     {
+        Debug.Log("face direction in shoot start: " + playerController.faceDirection);
         Bullet bullet = (Bullet)PoolManager.Instance.Spawn(bulletPoolName);
-        var velocity = new Vector3(0, 0, 0);
+        var velocity = new Vector3(1, 0, 0);
 
-        if(player.transform.localScale.x < 0)
+
+
+         if (playerController.faceDirection == -1 )// if flip ;player face to left
         {
-            velocity = new Vector3(-1, 0, 0);
+            Debug.Log("shootDirection should be left,current:" + playerController.faceDirection);
+            velocity = new Vector3(-8, 0, 0); // this is for right;
         }
-        else
-        {
-            velocity = new Vector3(1, 0, 0);
-        }
+     
+
 
         bullet.transform.position = firePoint.transform.position;
 
@@ -37,7 +49,9 @@ public class Shoot : MonoBehaviour
         rb.velocity = additionalVelocity;
 
         rb?.AddForce(velocity * bulletForce, ForceMode2D.Impulse);
+        Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), player.GetComponent<Collider2D>());
     }
 
 
+    
 }

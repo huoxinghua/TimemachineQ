@@ -12,7 +12,8 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     [Header("visual part of player to Flip")]
-    [SerializeField] private Transform visuals;
+    [SerializeField] public Transform visuals;
+    public float faceDirection;
 
     [Header("Jump")]
     [SerializeField] float jumpVelocity = 5f;
@@ -34,9 +35,7 @@ public class PlayerController : MonoBehaviour
     [Header("Stairs")]
     [SerializeField] private float climbSpeed = 2f;
     public bool isOnLadder = false;
-    private bool isClimbing;
-   // private int ladderContactCount = 0; // Use to track contacts with the ladder
-
+   
     private float fallMultiplier;
     private float lowJumpMultiplier;
 
@@ -53,6 +52,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+
         GameObject switchObject = GameObject.FindGameObjectWithTag("Switch");
         if (switchObject != null)
         {
@@ -63,6 +63,8 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogWarning("SwitchButtonController not found or not assigned.");
         }
+
+       
     }
 
     private void FixedUpdate()
@@ -81,7 +83,8 @@ public class PlayerController : MonoBehaviour
             rb.gravityScale = 1f;
             HandleJumpModifier();
         }
-       
+
+
     }
 
     public void Move(float movement)
@@ -89,38 +92,50 @@ public class PlayerController : MonoBehaviour
         this.movementVector.x = movement;
         rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
         rb.gravityScale = 1f;
-        HandleVisualFlip();
+        
+
+
+        if (movementVector.x > 0)//player move direction is right
+        {
+            faceDirection = movement;
+            visuals.localScale = new Vector3(faceDirection, 1, 1);
+
+           // Debug.Log("faceDirection should be right,current:" + faceDirection);
+
+        }
+        else if (movementVector.x < 0)
+        {
+            faceDirection = movement;
+            visuals.localScale = new Vector3(faceDirection, 1, 1);
+
+           // Debug.Log("faceDirection should be left,current:" + faceDirection);
+        }
     }
 
-    //the player move left and right should be different in visual
-    private void HandleVisualFlip()
-    {
-        if(movementVector.x > 0)
-        {
-            visuals.localScale = new Vector3(1, 1, 1);
-        }
-        else if(movementVector.x < 0)
-        {
-            visuals.localScale = new Vector3(-1, 1, 1);
-        }
-    }
+    
 
     public void Jump()
     {
        
         if( rb != null )
         {
-            if ((groundCheck.IsGrounded)&& !isJumping)
+            if (groundCheck.IsGrounded && !isJumping)
 
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
                 isJumping = true;
             }
-        } 
+            else if(!groundCheck.IsGrounded && !isJumping && !isOnLadder)
+            {
+                HandleJumpModifier();
+            }
+        }
+        
     }
 
     private void HandleJumpModifier()
     {
+        Debug.Log("add coyote time to better jump");
         if (rb != null)
         {
             //is falling
@@ -195,15 +210,15 @@ public class PlayerController : MonoBehaviour
         Debug.Log("You leave the Ladder");
         if (collision.CompareTag("Stair"))
         {
-            isOnLadder = false;
-            isJumping = false;
-            //StartCoroutine(RestoreGravity());
+          //  isOnLadder = false;
+           // isJumping = false;
+            StartCoroutine(RestoreGravity());
 
         }
     }
     private IEnumerator RestoreGravity()
     {
-        yield return new WaitForSeconds(5f); // Adjust the delay time as needed
+        yield return new WaitForSeconds(0.2f); // Adjust the delay time as needed
         isOnLadder = false;
         isJumping = false;
         rb.gravityScale = 1f;
