@@ -64,37 +64,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (!isOnLadder)
-        {
-            rb.gravityScale = 1f;
-        }
-            
-    }
     private void FixedUpdate()
     {
-        /*
-        if(isLadder)
-        {
-            isClimbing = true;
-            MoveUp(1);
-        }
-        else if(!isLadder)
-        {
-            isClimbing = false;
-            MoveUp(-1);
-        }
-       */
         rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
+        rb.gravityScale = 1f;
 
-        if (isClimbing)
+        //renew the rb when on Stair
+        if (isOnLadder)
         {
             rb.velocity = new Vector2(rb.velocity.x, movementVector.y* climbSpeed);
+            rb.gravityScale = 0f;
         }
-        else if (isGrounded)
+        else if (groundCheck.IsGrounded && !isOnLadder)
         {
             rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);//this is for nomal move
+            rb.gravityScale = 1f;
         }
         else
         {
@@ -128,12 +112,11 @@ public class PlayerController : MonoBehaviour
        
         if( rb != null )
         {
-            if (!isJumping && (groundCheck.IsGrounded))
+            if ((groundCheck.IsGrounded)&& !isJumping && !isOnLadder)
 
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
                 isJumping = true;
-                rb.gravityScale = 1f;
             }
         } 
     }
@@ -153,20 +136,16 @@ public class PlayerController : MonoBehaviour
                 rb.velocity += Vector2.up * (Physics2D.gravity.y * Time.fixedDeltaTime * lowJumpMultiplier);
             }
             rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
+            rb.gravityScale = 1f;
         }
     }
 
-    public void MoveUp(float movementUp)
+    public void StairMove(float movementUp)
     {
-        Debug.Log("move up now");
-        Debug.Log("movementUP");
-        if (!isOnLadder || movementUp < 0)
-        {
-            isJumping = false;
-            return;
-        }
+       
+        Debug.Log("Stair Move begin");
+    
         this.movementVector.y = movementUp;
-        rb.gravityScale = 0f;
 
     }
    
@@ -194,18 +173,19 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("You are on the Ladder");
         if (collision.CompareTag("Stair"))
         {
-            Debug.Log("You are about to climb");
             isOnLadder = true;
+           // isJumping = false;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        Debug.Log("You leave the Ladder");
         if (collision.CompareTag("Stair"))
         {
-            Debug.Log("You are done climbing");
             isOnLadder = false;
             isClimbing = false;
         }
