@@ -32,9 +32,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] ElevatorSwitch elevatorSwitch;
 
     [Header("Stairs")]
-    [SerializeField] private float climbSpeed = 8f;
-    private bool isOnLadder = false;
-    public bool isClimbing;
+    [SerializeField] private float climbSpeed = 2f;
+    public bool isOnLadder = false;
+    private bool isClimbing;
+   // private int ladderContactCount = 0; // Use to track contacts with the ladder
 
     private float fallMultiplier;
     private float lowJumpMultiplier;
@@ -66,32 +67,29 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
-        rb.gravityScale = 1f;
-
+        
         //renew the rb when on Stair
         if (isOnLadder)
         {
+            
             rb.velocity = new Vector2(rb.velocity.x, movementVector.y* climbSpeed);
             rb.gravityScale = 0f;
         }
-        else if (groundCheck.IsGrounded && !isOnLadder)
-        {
-            rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);//this is for nomal move
-            rb.gravityScale = 1f;
-        }
         else
         {
+            rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
+            rb.gravityScale = 1f;
             HandleJumpModifier();
         }
-
-        HandleVisualFlip();
+       
     }
 
     public void Move(float movement)
     {
-        isJumping = true;
         this.movementVector.x = movement;
+        rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
+        rb.gravityScale = 1f;
+        HandleVisualFlip();
     }
 
     //the player move left and right should be different in visual
@@ -112,7 +110,7 @@ public class PlayerController : MonoBehaviour
        
         if( rb != null )
         {
-            if ((groundCheck.IsGrounded)&& !isJumping && !isOnLadder)
+            if ((groundCheck.IsGrounded)&& !isJumping)
 
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
@@ -146,13 +144,23 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Stair Move begin");
     
         this.movementVector.y = movementUp;
-
+        climbSpeed = 2f;
     }
-   
+
 
     public void JumpReleased()
     {
         isJumping = false;
+       
+    }
+    public void StopInStair()
+    {
+        Debug.Log("player stop on stair");
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 0f;
+        climbSpeed = 0f;
+        Debug.Log("stop in stair gravity" + rb.gravityScale + rb.velocity + climbSpeed);
+        
     }
 
     public void AttachToParent(Transform newParent)
@@ -177,7 +185,8 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Stair"))
         {
             isOnLadder = true;
-           // isJumping = false;
+            isJumping = false;
+            
         }
     }
 
@@ -187,8 +196,17 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Stair"))
         {
             isOnLadder = false;
-            isClimbing = false;
+            isJumping = false;
+            //StartCoroutine(RestoreGravity());
+
         }
+    }
+    private IEnumerator RestoreGravity()
+    {
+        yield return new WaitForSeconds(5f); // Adjust the delay time as needed
+        isOnLadder = false;
+        isJumping = false;
+        rb.gravityScale = 1f;
     }
 }
 

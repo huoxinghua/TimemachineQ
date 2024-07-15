@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MoveUp",
+                    "name": "StairMove",
                     "type": "Button",
                     "id": "ff72ded6-0005-4822-837d-8d6b78c18434",
                     "expectedControlType": "Button",
@@ -105,7 +105,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveUp",
+                    "action": "StairMove",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -116,7 +116,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveUp",
+                    "action": "StairMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -127,7 +127,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveUp",
+                    "action": "StairMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }
@@ -165,7 +165,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MoveUp",
+                    "name": "StairMove",
                     "type": "Button",
                     "id": "f6a6fe33-b80f-4877-bbd5-9a112ce2af13",
                     "expectedControlType": "Button",
@@ -237,7 +237,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveUp",
+                    "action": "StairMove",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -248,7 +248,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveUp",
+                    "action": "StairMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -259,7 +259,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveUp",
+                    "action": "StairMove",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }
