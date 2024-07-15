@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    Rigidbody2D _rb;
-
-    private Shoot weapon;
-
     [Header("Movement")]
     [SerializeField] protected float speed = 5.0f;
     #region Private Variables
     private Rigidbody2D rb;
     private Vector2 movementVector;
     #endregion
+
+    [Header("visual part of player to Flip")]
+    [SerializeField] private Transform visuals;
 
     [Header("Jump")]
     [SerializeField] float jumpVelocity = 5f;
@@ -24,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [Header("Weapons")]
     [SerializeField]
     private Shoot gun;
+    private Shoot weapon;
     [SerializeField]
     private Transform gunLocation;
 
@@ -33,26 +33,25 @@ public class PlayerController : MonoBehaviour
 
     [Header("Stairs")]
     [SerializeField] private float climbSpeed = 8f;
-        [SerializeField]
     private bool isLadder = false;
     private bool isClimbing;
 
     private float fallMultiplier;
     private float lowJumpMultiplier;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         groundCheck = GetComponent<GroundCheck>();
-        _rb = GetComponent<Rigidbody2D>();
         if (gun && gunLocation) 
         {
             weapon = Instantiate(gun, gunLocation);
             weapon.player = this.gameObject;
         }
     }
+
     void Start()
     {
-        // isOperate = false;
         GameObject switchObject = GameObject.FindGameObjectWithTag("Switch");
         if (switchObject != null)
         {
@@ -65,40 +64,52 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
-    
+    private void FixedUpdate()
+    {
+        rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
+
+        if (isClimbing)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, movementVector.y);
+        }
+        else if (isGrounded)
+        {
+            rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
+        }
+        else
+        {
+            HandleJumpModifier();
+        }
+
+        HandleVisualFlip();
+    }
+
     public void Move(float movement)
     {
         Debug.Log("W for jump");
+        isJumping = true;
         this.movementVector.x = movement;
         if (rb != null)
         {
-
-            // Calculate velocity
+            // Calculate velocity and Apply velocity to the Rigidbody2D
             Vector2 velocity = new Vector2(this.movementVector.x * speed, rb.velocity.y);
 
-            // Apply velocity to the Rigidbody2D
             rb.velocity = velocity;
-
-            //flipping character
-            if (velocity.x > 0)
-            {
-                gameObject.transform.localScale = new Vector3(1, 1, 1);
-
-            }
-
-            if (velocity.x < 0)
-            {
-                gameObject.transform.localScale = new Vector3(-1, 1, 1);
-            }
-
-  
-         
-            
         }
-
-        
     }
+
+    private void HandleVisualFlip()
+    {
+        if(movementVector.x > 0)
+        {
+            visuals.localScale = new Vector3(1, 1, 1);
+        }
+        else if(movementVector.x < 0)
+        {
+            visuals.localScale = new Vector3(-1, 1, 1);
+        }
+    }
+
     public void Jump()
     {
        
@@ -114,38 +125,11 @@ public class PlayerController : MonoBehaviour
         } 
     }
 
-   
-    public void MoveUp(float movementUp)
+    private void HandleJumpModifier()
     {
-        if (!isLadder || movementUp < 0)
+        if (rb != null)
         {
-            isJumping = false;
-            return;
-        }
 
-        isJumping = true;
-        Debug.Log("Move up");
-        this.movementVector.y = movementUp;
-       // rb.AddForce(new Vector2(0, this.movementVector.y * speed), ForceMode2D.Impulse);
-        Vector2 velocity = new Vector2(rb.velocity.x,this.movementVector.y * speed);
-
-        // Apply the new velocity to the Rigidbody2D component
-        //rb.velocity = new Vector2(rb.velocity.x, speed);
-        rb.velocity = velocity;
-        rb.gravityScale = 0.6f;
-
-    }
-   
-
-    public void JumpReleased()
-    {
-        isJumping = false;
-    }
-    private void FixedUpdate()
-    {
-        if(rb != null)
-        {
-          
             //is falling
             if (rb.velocity.y < 0)
             {
@@ -158,10 +142,33 @@ public class PlayerController : MonoBehaviour
             }
             rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
         }
-     
-        
     }
 
+    public void MoveUp(float movementUp)
+    {
+        if (!isLadder || movementUp < 0)
+        {
+            isJumping = false;
+            return;
+        }
+
+        isJumping = true;
+        Debug.Log("Move up");
+        this.movementVector.y = movementUp;
+        Vector2 velocity = new Vector2(rb.velocity.x,this.movementVector.y * speed);
+
+        // Apply the new velocity to the Rigidbody2D component
+        rb.velocity = velocity;
+        rb.gravityScale = 0.6f;
+
+    }
+   
+
+    public void JumpReleased()
+    {
+        isJumping = false;
+    }
+    
 
 
     public void AttachToParent(Transform newParent)
@@ -171,7 +178,7 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerShoot()
     {
-        weapon?.GunShoot(_rb.velocity);
+        weapon?.GunShoot(rb.velocity);
     }
    
   
