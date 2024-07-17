@@ -13,8 +13,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("visual part of player to Flip")]
     [SerializeField] public Transform visuals;
-    public float RedfaceDirection;
-    public float BluefaceDirection;
+    public float faceDirection;
+    //public float RedfaceDirection;
+    //public float BluefaceDirection;
     public string currentMovePlayer;
     [SerializeField] PlayerInputController playerInputController;
     
@@ -57,9 +58,10 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        faceDirection = 1;
+        //RedfaceDirection = 1;
+        //BluefaceDirection = 1;
 
-        RedfaceDirection = 1;
-        BluefaceDirection = 1;
         GameObject switchObject = GameObject.FindGameObjectWithTag("Switch");
         if (switchObject != null)
         {
@@ -80,7 +82,6 @@ public class PlayerController : MonoBehaviour
         //renew the rb when on Stair
         if (isOnLadder)
         {
-            
             rb.velocity = new Vector2(rb.velocity.x, movementVector.y* climbSpeed);
             rb.gravityScale = 0f;
         }
@@ -90,53 +91,43 @@ public class PlayerController : MonoBehaviour
             rb.gravityScale = 1f;
             HandleJumpModifier();
         }
-
-
     }
+
   //  public PlayerInputController.PlayerType GetPlayerType()
   //  {
       //  return currentplayerType;
    // }
+
     public void Move(float movement)
     {
-        Debug.Log("playercontroller.move");
+        Debug.Log("playercontroller.move, get movement:"+movement);
 
         this.movementVector.x = movement;
         rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
         rb.gravityScale = 1f;
 
-        if(movementVector.x > 0)
+        if (movementVector.x > 0)
         {
             visuals.localScale = new Vector3(1, 1, 1);
-            string currentFlipPlayer = CheckPlayerType();
-           /* if(currentFlipPlayer == "RedPlayer")
-            {
-                RedfaceDirection = -1;
-            }
-            else
-            {
-                BluefaceDirection = -1;
-            }*/
+            faceDirection = movement;
         }
-        else if(movementVector.x < 0)
+        else if (movementVector.x < 0)
         {
             visuals.localScale = new Vector3(-1, 1, 1);
+            faceDirection = movement;
         }
-
-
+        else {
+            //Debug.Log("movementVector.x = 0");
+        }
     }
-    public void ResetPlayerDirection()
-    {
-        
-    }
-
 
     public void PlayerShoot()
     {
-        string currentShootPlayer = CheckPlayerType();
-        Debug.Log("currentPlayer :" + currentShootPlayer);
-
-        weapon?.GunShoot(rb.velocity);
+        //string currentShootPlayer = CheckPlayerType();
+        //Debug.Log("currentPlayer:" + currentShootPlayer);
+        //Debug.Log("faceDirection:" + faceDirection);
+        Vector2 bulletVector = new Vector2(faceDirection * speed, rb.velocity.y);
+        weapon?.GunShoot(bulletVector);
     }
     private string CheckPlayerType()
     {
