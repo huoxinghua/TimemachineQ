@@ -10,8 +10,7 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
-        Debug.Log("GameManager start");
-       // pauseOverMenu.SetActive(true);
+        pauseOverMenu.SetActive(false);
 
     }
 

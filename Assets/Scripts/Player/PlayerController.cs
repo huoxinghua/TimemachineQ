@@ -12,7 +12,14 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     [Header("visual part of player to Flip")]
-    [SerializeField] private Transform visuals;
+    [SerializeField] public Transform visuals;
+    public float faceDirection;
+    //public float RedfaceDirection;
+    //public float BluefaceDirection;
+    public string currentMovePlayer;
+    [SerializeField] PlayerInputController playerInputController;
+    
+    
 
     [Header("Jump")]
     [SerializeField] float jumpVelocity = 5f;
@@ -28,16 +35,15 @@ public class PlayerController : MonoBehaviour
     private Transform gunLocation;
 
     [Header("Operate Elevator")]
-    public bool isOperate;
     [SerializeField] ElevatorSwitch elevatorSwitch;
 
     [Header("Stairs")]
-    [SerializeField] private float climbSpeed = 8f;
-    private bool isLadder = false;
-    private bool isClimbing;
-
+    [SerializeField] private float climbSpeed = 2f;
+    public bool isOnLadder = false;
+   
     private float fallMultiplier;
     private float lowJumpMultiplier;
+    private PlayerInputController.PlayerType currentplayerType;
 
     void Awake()
     {
@@ -46,12 +52,15 @@ public class PlayerController : MonoBehaviour
         if (gun && gunLocation) 
         {
             weapon = Instantiate(gun, gunLocation);
-            weapon.player = this.gameObject;
+           
         }
     }
 
     void Start()
     {
+        faceDirection = 1;
+       
+
         GameObject switchObject = GameObject.FindGameObjectWithTag("Switch");
         if (switchObject != null)
         {
@@ -62,74 +71,92 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogWarning("SwitchButtonController not found or not assigned.");
         }
+        playerInputController = GetComponent<PlayerInputController>();
+
     }
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
-
-        if (isClimbing)
+        
+        //renew the rb when on Stair
+        if (isOnLadder)
         {
-            rb.velocity = new Vector2(rb.velocity.x, movementVector.y);
-        }
-        else if (isGrounded)
-        {
-            rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
+            rb.velocity = new Vector2(rb.velocity.x, movementVector.y* climbSpeed);
+            rb.gravityScale = 0f;
         }
         else
         {
+            rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
+            rb.gravityScale = 1f;
             HandleJumpModifier();
         }
-
-        HandleVisualFlip();
     }
 
     public void Move(float movement)
     {
-        Debug.Log("W for jump");
-        isJumping = true;
+        Debug.Log("playercontroller.move, get movement:"+movement);
+
         this.movementVector.x = movement;
-        if (rb != null)
-        {
-            // Calculate velocity and Apply velocity to the Rigidbody2D
-            Vector2 velocity = new Vector2(this.movementVector.x * speed, rb.velocity.y);
+        rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
+        rb.gravityScale = 1f;
 
-            rb.velocity = velocity;
-        }
-    }
-
-    private void HandleVisualFlip()
-    {
-        if(movementVector.x > 0)
+        if (movementVector.x > 0)
         {
             visuals.localScale = new Vector3(1, 1, 1);
+            faceDirection = movement;
         }
-        else if(movementVector.x < 0)
+        else if (movementVector.x < 0)
         {
             visuals.localScale = new Vector3(-1, 1, 1);
+            faceDirection = movement;
         }
     }
+
+    public void PlayerShoot()
+    {
+        weapon?.GunShoot(faceDirection);
+
+    }
+
+    //private string CheckPlayerType()
+    //{
+    //    if (this.CompareTag("RedPlayer"))
+    //    {
+           
+    //        return "RedPlayer";
+    //    }
+    //    else//now is blue player
+    //    {
+           
+    //        return "Blue Player";
+    //    }
+        
+    //}
 
     public void Jump()
     {
        
         if( rb != null )
         {
-            if (!isJumping && (groundCheck.IsGrounded))
+            if (groundCheck.IsGrounded && !isJumping)
 
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
                 isJumping = true;
-                rb.gravityScale = 1f;
             }
-        } 
+            else if(!groundCheck.IsGrounded && !isJumping && !isOnLadder)
+            {
+                HandleJumpModifier();
+            }
+        }
+        
     }
 
     private void HandleJumpModifier()
     {
+        //Debug.Log(this.name + "add coyote time to better jump");
         if (rb != null)
         {
-
             //is falling
             if (rb.velocity.y < 0)
             {
@@ -141,45 +168,44 @@ public class PlayerController : MonoBehaviour
                 rb.velocity += Vector2.up * (Physics2D.gravity.y * Time.fixedDeltaTime * lowJumpMultiplier);
             }
             rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
+            rb.gravityScale = 1f;
         }
     }
 
-    public void MoveUp(float movementUp)
+    
+
+    public void StairMove(float movementUp)
     {
-        if (!isLadder || movementUp < 0)
-        {
-            isJumping = false;
-            return;
-        }
-
-        isJumping = true;
-        Debug.Log("Move up");
+       
+        Debug.Log("Stair Move begin");
+    
         this.movementVector.y = movementUp;
-        Vector2 velocity = new Vector2(rb.velocity.x,this.movementVector.y * speed);
-
-        // Apply the new velocity to the Rigidbody2D component
-        rb.velocity = velocity;
-        rb.gravityScale = 0.6f;
-
+        climbSpeed = 2f;
     }
-   
+
 
     public void JumpReleased()
     {
         isJumping = false;
+       
     }
-    
 
+    public void StopInStair()
+    {
+        Debug.Log("player stop on stair");
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 0f;
+        climbSpeed = 0f;
+        Debug.Log("stop in stair gravity" + rb.gravityScale + rb.velocity + climbSpeed);
+        
+    }
 
     public void AttachToParent(Transform newParent)
     {
         this.transform.parent = newParent;
     }
 
-    public void PlayerShoot()
-    {
-        weapon?.GunShoot(rb.velocity);
-    }
+   
    
   
     public void Die()
@@ -189,21 +215,32 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("You are on the Ladder");
         if (collision.CompareTag("Stair"))
         {
-            Debug.Log("You are about to climb");
-            isLadder = true;
+            isOnLadder = true;
+            isJumping = false;
+            
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        Debug.Log("You leave the Ladder");
         if (collision.CompareTag("Stair"))
         {
-            Debug.Log("You are done climbing");
-            isLadder = false;
-            isClimbing = false;
+          //  isOnLadder = false;
+           // isJumping = false;
+            StartCoroutine(RestoreGravity());
+
         }
+    }
+    private IEnumerator RestoreGravity()
+    {
+        yield return new WaitForSeconds(0.2f); // Adjust the delay time as needed
+        isOnLadder = false;
+        isJumping = false;
+        rb.gravityScale = 1f;
     }
 }
 

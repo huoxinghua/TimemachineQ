@@ -41,12 +41,19 @@ public class PoolManager : Singleton<PoolManager>
             PoolObject newPoolObject = Instantiate(whatIsInTheStack);
             newPoolObject.name = whatIsInTheStack.name;
             newPoolObject.gameObject.SetActive(true);
+
+            //reset the direction of bullet
+           // ResetBulletDirection(newPoolObject);
             return newPoolObject;
         }
 
         //If there is more than one object, just remove and return the last object from the stack
         PoolObject lastObjectInTheStack = objStack.Pop();
         lastObjectInTheStack.gameObject.SetActive(true);
+
+        //reset the direction before use
+       // ResetBulletDirection(lastObjectInTheStack);
+
         return lastObjectInTheStack;
 
     }
@@ -60,4 +67,14 @@ public class PoolManager : Singleton<PoolManager>
         objStack.Push(poolObject);
     }
 
+
+    private void ResetBulletDirection(PoolObject bullet)
+    {
+        bullet.transform.localRotation = Quaternion.identity; // Reset rotation
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero; // Reset velocity
+        }
+    }
 }

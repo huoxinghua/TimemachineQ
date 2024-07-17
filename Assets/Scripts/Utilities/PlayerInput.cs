@@ -55,7 +55,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""MoveUp"",
+                    ""name"": ""StairMove"",
                     ""type"": ""Button"",
                     ""id"": ""ff72ded6-0005-4822-837d-8d6b78c18434"",
                     ""expectedControlType"": ""Button"",
@@ -127,7 +127,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MoveUp"",
+                    ""action"": ""StairMove"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -138,7 +138,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MoveUp"",
+                    ""action"": ""StairMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -149,7 +149,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MoveUp"",
+                    ""action"": ""StairMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 }
@@ -187,7 +187,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""MoveUp"",
+                    ""name"": ""StairMove"",
                     ""type"": ""Button"",
                     ""id"": ""f6a6fe33-b80f-4877-bbd5-9a112ce2af13"",
                     ""expectedControlType"": ""Button"",
@@ -259,7 +259,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MoveUp"",
+                    ""action"": ""StairMove"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -270,7 +270,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MoveUp"",
+                    ""action"": ""StairMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -281,37 +281,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MoveUp"",
+                    ""action"": ""StairMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                }
-            ]
-        },
-        {
-            ""name"": ""PlayerAction"",
-            ""id"": ""3ebfb015-ebfb-4b92-a0a5-ab8925d2e796"",
-            ""actions"": [
-                {
-                    ""name"": ""Operate"",
-                    ""type"": ""Button"",
-                    ""id"": ""500212ed-ad9d-40d5-81c2-314d27f841fe"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""7bf41584-ba50-4cf6-97c3-e81fc367678c"",
-                    ""path"": ""<Keyboard>/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Operate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -323,16 +295,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_RedPlayerMovement_Move = m_RedPlayerMovement.FindAction("Move", throwIfNotFound: true);
         m_RedPlayerMovement_Jump = m_RedPlayerMovement.FindAction("Jump", throwIfNotFound: true);
         m_RedPlayerMovement_Shoot = m_RedPlayerMovement.FindAction("Shoot", throwIfNotFound: true);
-        m_RedPlayerMovement_MoveUp = m_RedPlayerMovement.FindAction("MoveUp", throwIfNotFound: true);
+        m_RedPlayerMovement_StairMove = m_RedPlayerMovement.FindAction("StairMove", throwIfNotFound: true);
         // BluePlayerMovement
         m_BluePlayerMovement = asset.FindActionMap("BluePlayerMovement", throwIfNotFound: true);
         m_BluePlayerMovement_Move = m_BluePlayerMovement.FindAction("Move", throwIfNotFound: true);
         m_BluePlayerMovement_Jump = m_BluePlayerMovement.FindAction("Jump", throwIfNotFound: true);
         m_BluePlayerMovement_Shoot = m_BluePlayerMovement.FindAction("Shoot", throwIfNotFound: true);
-        m_BluePlayerMovement_MoveUp = m_BluePlayerMovement.FindAction("MoveUp", throwIfNotFound: true);
-        // PlayerAction
-        m_PlayerAction = asset.FindActionMap("PlayerAction", throwIfNotFound: true);
-        m_PlayerAction_Operate = m_PlayerAction.FindAction("Operate", throwIfNotFound: true);
+        m_BluePlayerMovement_StairMove = m_BluePlayerMovement.FindAction("StairMove", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -397,7 +366,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_RedPlayerMovement_Move;
     private readonly InputAction m_RedPlayerMovement_Jump;
     private readonly InputAction m_RedPlayerMovement_Shoot;
-    private readonly InputAction m_RedPlayerMovement_MoveUp;
+    private readonly InputAction m_RedPlayerMovement_StairMove;
     public struct RedPlayerMovementActions
     {
         private @PlayerInput m_Wrapper;
@@ -405,7 +374,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_RedPlayerMovement_Move;
         public InputAction @Jump => m_Wrapper.m_RedPlayerMovement_Jump;
         public InputAction @Shoot => m_Wrapper.m_RedPlayerMovement_Shoot;
-        public InputAction @MoveUp => m_Wrapper.m_RedPlayerMovement_MoveUp;
+        public InputAction @StairMove => m_Wrapper.m_RedPlayerMovement_StairMove;
         public InputActionMap Get() { return m_Wrapper.m_RedPlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -424,9 +393,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
-            @MoveUp.started += instance.OnMoveUp;
-            @MoveUp.performed += instance.OnMoveUp;
-            @MoveUp.canceled += instance.OnMoveUp;
+            @StairMove.started += instance.OnStairMove;
+            @StairMove.performed += instance.OnStairMove;
+            @StairMove.canceled += instance.OnStairMove;
         }
 
         private void UnregisterCallbacks(IRedPlayerMovementActions instance)
@@ -440,9 +409,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
-            @MoveUp.started -= instance.OnMoveUp;
-            @MoveUp.performed -= instance.OnMoveUp;
-            @MoveUp.canceled -= instance.OnMoveUp;
+            @StairMove.started -= instance.OnStairMove;
+            @StairMove.performed -= instance.OnStairMove;
+            @StairMove.canceled -= instance.OnStairMove;
         }
 
         public void RemoveCallbacks(IRedPlayerMovementActions instance)
@@ -467,7 +436,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_BluePlayerMovement_Move;
     private readonly InputAction m_BluePlayerMovement_Jump;
     private readonly InputAction m_BluePlayerMovement_Shoot;
-    private readonly InputAction m_BluePlayerMovement_MoveUp;
+    private readonly InputAction m_BluePlayerMovement_StairMove;
     public struct BluePlayerMovementActions
     {
         private @PlayerInput m_Wrapper;
@@ -475,7 +444,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_BluePlayerMovement_Move;
         public InputAction @Jump => m_Wrapper.m_BluePlayerMovement_Jump;
         public InputAction @Shoot => m_Wrapper.m_BluePlayerMovement_Shoot;
-        public InputAction @MoveUp => m_Wrapper.m_BluePlayerMovement_MoveUp;
+        public InputAction @StairMove => m_Wrapper.m_BluePlayerMovement_StairMove;
         public InputActionMap Get() { return m_Wrapper.m_BluePlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -494,9 +463,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
-            @MoveUp.started += instance.OnMoveUp;
-            @MoveUp.performed += instance.OnMoveUp;
-            @MoveUp.canceled += instance.OnMoveUp;
+            @StairMove.started += instance.OnStairMove;
+            @StairMove.performed += instance.OnStairMove;
+            @StairMove.canceled += instance.OnStairMove;
         }
 
         private void UnregisterCallbacks(IBluePlayerMovementActions instance)
@@ -510,9 +479,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
-            @MoveUp.started -= instance.OnMoveUp;
-            @MoveUp.performed -= instance.OnMoveUp;
-            @MoveUp.canceled -= instance.OnMoveUp;
+            @StairMove.started -= instance.OnStairMove;
+            @StairMove.performed -= instance.OnStairMove;
+            @StairMove.canceled -= instance.OnStairMove;
         }
 
         public void RemoveCallbacks(IBluePlayerMovementActions instance)
@@ -530,68 +499,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public BluePlayerMovementActions @BluePlayerMovement => new BluePlayerMovementActions(this);
-
-    // PlayerAction
-    private readonly InputActionMap m_PlayerAction;
-    private List<IPlayerActionActions> m_PlayerActionActionsCallbackInterfaces = new List<IPlayerActionActions>();
-    private readonly InputAction m_PlayerAction_Operate;
-    public struct PlayerActionActions
-    {
-        private @PlayerInput m_Wrapper;
-        public PlayerActionActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Operate => m_Wrapper.m_PlayerAction_Operate;
-        public InputActionMap Get() { return m_Wrapper.m_PlayerAction; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerActionActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerActionActions instance)
-        {
-            if (instance == null || m_Wrapper.m_PlayerActionActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerActionActionsCallbackInterfaces.Add(instance);
-            @Operate.started += instance.OnOperate;
-            @Operate.performed += instance.OnOperate;
-            @Operate.canceled += instance.OnOperate;
-        }
-
-        private void UnregisterCallbacks(IPlayerActionActions instance)
-        {
-            @Operate.started -= instance.OnOperate;
-            @Operate.performed -= instance.OnOperate;
-            @Operate.canceled -= instance.OnOperate;
-        }
-
-        public void RemoveCallbacks(IPlayerActionActions instance)
-        {
-            if (m_Wrapper.m_PlayerActionActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IPlayerActionActions instance)
-        {
-            foreach (var item in m_Wrapper.m_PlayerActionActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerActionActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public PlayerActionActions @PlayerAction => new PlayerActionActions(this);
     public interface IRedPlayerMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
-        void OnMoveUp(InputAction.CallbackContext context);
+        void OnStairMove(InputAction.CallbackContext context);
     }
     public interface IBluePlayerMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
-        void OnMoveUp(InputAction.CallbackContext context);
-    }
-    public interface IPlayerActionActions
-    {
-        void OnOperate(InputAction.CallbackContext context);
+        void OnStairMove(InputAction.CallbackContext context);
     }
 }
