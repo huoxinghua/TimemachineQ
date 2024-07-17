@@ -43,7 +43,7 @@ public class PoolManager : Singleton<PoolManager>
             newPoolObject.gameObject.SetActive(true);
 
             //reset the direction of bullet
-            ResetBulletDirection(newPoolObject);
+           // ResetBulletDirection(newPoolObject);
             return newPoolObject;
         }
 
@@ -52,7 +52,7 @@ public class PoolManager : Singleton<PoolManager>
         lastObjectInTheStack.gameObject.SetActive(true);
 
         //reset the direction before use
-        ResetBulletDirection(lastObjectInTheStack);
+       // ResetBulletDirection(lastObjectInTheStack);
 
         return lastObjectInTheStack;
 
@@ -66,6 +66,7 @@ public class PoolManager : Singleton<PoolManager>
         poolObject.gameObject.SetActive(false);
         objStack.Push(poolObject);
     }
+
 
     private void ResetBulletDirection(PoolObject bullet)
     {

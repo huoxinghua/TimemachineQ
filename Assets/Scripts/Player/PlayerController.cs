@@ -52,15 +52,14 @@ public class PlayerController : MonoBehaviour
         if (gun && gunLocation) 
         {
             weapon = Instantiate(gun, gunLocation);
-            weapon.player = this.gameObject;
+           
         }
     }
 
     void Start()
     {
         faceDirection = 1;
-        //RedfaceDirection = 1;
-        //BluefaceDirection = 1;
+       
 
         GameObject switchObject = GameObject.FindGameObjectWithTag("Switch");
         if (switchObject != null)
@@ -93,11 +92,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-  //  public PlayerInputController.PlayerType GetPlayerType()
-  //  {
-      //  return currentplayerType;
-   // }
-
     public void Move(float movement)
     {
         Debug.Log("playercontroller.move, get movement:"+movement);
@@ -116,33 +110,28 @@ public class PlayerController : MonoBehaviour
             visuals.localScale = new Vector3(-1, 1, 1);
             faceDirection = movement;
         }
-        else {
-            //Debug.Log("movementVector.x = 0");
-        }
     }
 
     public void PlayerShoot()
     {
-        //string currentShootPlayer = CheckPlayerType();
-        //Debug.Log("currentPlayer:" + currentShootPlayer);
-        //Debug.Log("faceDirection:" + faceDirection);
-        Vector2 bulletVector = new Vector2(faceDirection * speed, rb.velocity.y);
-        weapon?.GunShoot(bulletVector);
+        weapon?.GunShoot(faceDirection);
+
     }
-    private string CheckPlayerType()
-    {
-        if (this.CompareTag("RedPlayer"))
-        {
+
+    //private string CheckPlayerType()
+    //{
+    //    if (this.CompareTag("RedPlayer"))
+    //    {
            
-            return "RedPlayer";
-        }
-        else//now is blue player
-        {
+    //        return "RedPlayer";
+    //    }
+    //    else//now is blue player
+    //    {
            
-            return "Blue Player";
-        }
+    //        return "Blue Player";
+    //    }
         
-    }
+    //}
 
     public void Jump()
     {
