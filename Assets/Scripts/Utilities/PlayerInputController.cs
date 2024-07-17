@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,6 +41,7 @@ public class PlayerInputController : MonoBehaviour
                 playerInput.RedPlayerMovement.Jump.canceled += (val) => playerController.JumpReleased();
                 playerInput.RedPlayerMovement.Shoot.started += i => playerController.PlayerShoot();
 
+
             }
 
             else if (playerType == PlayerType.BluePlayer)
@@ -67,4 +69,10 @@ public class PlayerInputController : MonoBehaviour
             }
         }
     }
+
+    public PlayerType GetPlayerType()
+    {
+        return playerType;
+    }
+
 }

@@ -11,8 +11,6 @@ public class MovePlatform : MonoBehaviour
     private float _minTargetDistance = 0.01f;
 
 
-
-
     void Start()
     {
         this.transform.position = this.movePoints[0].transform.position;

@@ -13,7 +13,12 @@ public class PlayerController : MonoBehaviour
 
     [Header("visual part of player to Flip")]
     [SerializeField] public Transform visuals;
-    public float faceDirection;
+    public float RedfaceDirection;
+    public float BluefaceDirection;
+    public string currentMovePlayer;
+    [SerializeField] PlayerInputController playerInputController;
+    
+    
 
     [Header("Jump")]
     [SerializeField] float jumpVelocity = 5f;
@@ -29,7 +34,6 @@ public class PlayerController : MonoBehaviour
     private Transform gunLocation;
 
     [Header("Operate Elevator")]
-    public bool isOperate;
     [SerializeField] ElevatorSwitch elevatorSwitch;
 
     [Header("Stairs")]
@@ -38,6 +42,7 @@ public class PlayerController : MonoBehaviour
    
     private float fallMultiplier;
     private float lowJumpMultiplier;
+    private PlayerInputController.PlayerType currentplayerType;
 
     void Awake()
     {
@@ -53,6 +58,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
 
+        RedfaceDirection = 1;
+        BluefaceDirection = 1;
         GameObject switchObject = GameObject.FindGameObjectWithTag("Switch");
         if (switchObject != null)
         {
@@ -63,8 +70,8 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogWarning("SwitchButtonController not found or not assigned.");
         }
+        playerInputController = GetComponent<PlayerInputController>();
 
-       
     }
 
     private void FixedUpdate()
@@ -86,33 +93,65 @@ public class PlayerController : MonoBehaviour
 
 
     }
-
+  //  public PlayerInputController.PlayerType GetPlayerType()
+  //  {
+      //  return currentplayerType;
+   // }
     public void Move(float movement)
     {
+        Debug.Log("playercontroller.move");
+
         this.movementVector.x = movement;
         rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
         rb.gravityScale = 1f;
+
+        if(movementVector.x > 0)
+        {
+            visuals.localScale = new Vector3(1, 1, 1);
+            string currentFlipPlayer = CheckPlayerType();
+           /* if(currentFlipPlayer == "RedPlayer")
+            {
+                RedfaceDirection = -1;
+            }
+            else
+            {
+                BluefaceDirection = -1;
+            }*/
+        }
+        else if(movementVector.x < 0)
+        {
+            visuals.localScale = new Vector3(-1, 1, 1);
+        }
+
+
+    }
+    public void ResetPlayerDirection()
+    {
         
-
-
-        if (movementVector.x > 0)//player move direction is right
-        {
-            faceDirection = movement;
-            visuals.localScale = new Vector3(faceDirection, 1, 1);
-
-           // Debug.Log("faceDirection should be right,current:" + faceDirection);
-
-        }
-        else if (movementVector.x < 0)
-        {
-            faceDirection = movement;
-            visuals.localScale = new Vector3(faceDirection, 1, 1);
-
-           // Debug.Log("faceDirection should be left,current:" + faceDirection);
-        }
     }
 
-    
+
+    public void PlayerShoot()
+    {
+        string currentShootPlayer = CheckPlayerType();
+        Debug.Log("currentPlayer :" + currentShootPlayer);
+
+        weapon?.GunShoot(rb.velocity);
+    }
+    private string CheckPlayerType()
+    {
+        if (this.CompareTag("RedPlayer"))
+        {
+           
+            return "RedPlayer";
+        }
+        else//now is blue player
+        {
+           
+            return "Blue Player";
+        }
+        
+    }
 
     public void Jump()
     {
@@ -135,7 +174,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleJumpModifier()
     {
-        Debug.Log("add coyote time to better jump");
+        //Debug.Log(this.name + "add coyote time to better jump");
         if (rb != null)
         {
             //is falling
@@ -153,6 +192,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    
+
     public void StairMove(float movementUp)
     {
        
@@ -168,6 +209,7 @@ public class PlayerController : MonoBehaviour
         isJumping = false;
        
     }
+
     public void StopInStair()
     {
         Debug.Log("player stop on stair");
@@ -183,10 +225,7 @@ public class PlayerController : MonoBehaviour
         this.transform.parent = newParent;
     }
 
-    public void PlayerShoot()
-    {
-        weapon?.GunShoot(rb.velocity);
-    }
+   
    
   
     public void Die()
