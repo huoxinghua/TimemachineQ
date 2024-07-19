@@ -8,8 +8,6 @@ public class Shoot : MonoBehaviour
     [SerializeField]
     Transform firePoint;
 
-    [SerializeField]
-    PlayerController playerController;
 
     [SerializeField]
     string bulletPoolName;
@@ -17,24 +15,39 @@ public class Shoot : MonoBehaviour
     [SerializeField]
     float bulletForce = 10f;
 
-    [SerializeField]
-    public GameObject player;
-    // Update is called once per frame
-    private void Start()
+    
+
+    public virtual void GunShoot(float faceDirection)
     {
-       playerController = GameObject.FindObjectOfType<PlayerController>();
+        Debug.Log("GunShoot bulletPoolName:" + bulletPoolName);
+        Bullet bullet = (Bullet)PoolManager.Instance.Spawn(bulletPoolName);
+
+       
+
+        bullet.transform.position = firePoint.transform.position;
+
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+
+        Vector2 velocity = new Vector2(faceDirection, rb.velocity.y);
+       
+
+        if (faceDirection < 0)
+        {
+            //the bullet rotate to left with 90 
+            //bullet.transform.localScale = new Vector3(-1, 1, 1);
+            bullet.transform.rotation = Quaternion.Euler(0, 0, -90);
+        }
+        else {
+            //the bullet rotate to right with 90 
+            bullet.transform.rotation = Quaternion.Euler(0, 0, 90);
+        }
+
         
 
+        rb?.AddForce(velocity * bulletForce, ForceMode2D.Impulse);
+
+       
     }
 
-    public virtual void GunShoot(Vector2 velocity)
-    {
-        Debug.Log("Shoot.GunShoot:"+ velocity);
-        Bullet bullet = (Bullet)PoolManager.Instance.Spawn(bulletPoolName);
-        bullet.transform.position = firePoint.transform.position;
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        rb?.AddForce(velocity * bulletForce, ForceMode2D.Impulse);
-        bullet.transform.localScale = new Vector3(playerController.faceDirection, 1, 1);
-        Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), player.GetComponent<Collider2D>());
-    } 
+   
 }
