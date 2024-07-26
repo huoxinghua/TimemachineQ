@@ -219,7 +219,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 17.213833
+  orthographic size: 7.72
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -243,8 +243,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 32704926}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0010265004, y: -0.012076305, z: -0.000012397244, w: 0.99992657}
-  m_LocalPosition: {x: 27.883194, y: 12.999005, z: -10}
+  m_LocalRotation: {x: 0.009607174, y: -0.0011304457, z: 0.0000108608965, w: 0.9999532}
+  m_LocalPosition: {x: -7.4547863, y: 1.1843156, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8842,7 +8842,7 @@ Transform:
   m_GameObject: {fileID: 476644124}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.883194, y: 12.999005, z: 0}
+  m_LocalPosition: {x: -7.4547863, y: 1.1843156, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10095,6 +10095,7 @@ MonoBehaviour:
   speed: 5
   visuals: {fileID: 492048206}
   faceDirection: 1
+  currentMovePlayer: 
   playerInputController: {fileID: 992294522}
   jumpVelocity: 7
   gun: {fileID: 6681743482989027428, guid: 3ec3663d9dc8f7f448758371f1b30dbc, type: 3}
@@ -10235,7 +10236,7 @@ Transform:
   m_GameObject: {fileID: 992294520}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 43.43, y: 11.68, z: 0}
+  m_LocalPosition: {x: -7.3, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10519,6 +10520,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1721846965491213955, guid: 43b1f9c83a7154316af920e6594bb0ba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721846965491213955, guid: 43b1f9c83a7154316af920e6594bb0ba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4371766655178840207, guid: 43b1f9c83a7154316af920e6594bb0ba, type: 3}
       propertyPath: m_LocalPosition.x
       value: 46.5965
@@ -13266,6 +13275,7 @@ MonoBehaviour:
   speed: 6
   visuals: {fileID: 120109049}
   faceDirection: 1
+  currentMovePlayer: 
   playerInputController: {fileID: 0}
   jumpVelocity: 7
   gun: {fileID: 6681743482989027428, guid: 3ec3663d9dc8f7f448758371f1b30dbc, type: 3}
@@ -13379,7 +13389,7 @@ Transform:
   m_GameObject: {fileID: 1612271297}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.37, y: 14.4, z: 0}
+  m_LocalPosition: {x: -7.7, y: -0.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13477,8 +13487,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1627180360}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0010265004, y: -0.012076305, z: -0.000012397244, w: 0.99992657}
-  m_LocalPosition: {x: 27.883194, y: 12.999005, z: -10}
+  m_LocalRotation: {x: 0.009607174, y: -0.0011304457, z: 0.0000108608965, w: 0.9999532}
+  m_LocalPosition: {x: -7.4547863, y: 1.1843156, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
