@@ -8,6 +8,7 @@ public class PlayerInputController : MonoBehaviour
 {
     #region Private Variables
     private PlayerController playerController;
+    private GameManager gameManager;
     public enum PlayerType { RedPlayer, BluePlayer }
     [SerializeField] private PlayerType playerType;
     #endregion
@@ -17,11 +18,13 @@ public class PlayerInputController : MonoBehaviour
     void Awake()
     {
         playerController = GetComponent<PlayerController>();
+        gameManager = GetComponent<GameManager>();
     }
 
     void OnEnable()
     {
         PlayerInput playerInput = new PlayerInput();
+        playerInput.Game.Pause.performed += (val) => playerController.ShowPause();
 
         if (playerInput != null)
         {
@@ -62,10 +65,12 @@ public class PlayerInputController : MonoBehaviour
             if (playerType == PlayerType.RedPlayer)
             {
                 playerInput.RedPlayerMovement.Enable();
+                playerInput.Game.Pause.Enable();
             }
             else if (playerType == PlayerType.BluePlayer)
             {
                 playerInput.BluePlayerMovement.Enable();
+                playerInput.Game.Pause.Enable();
             }
         }
     }

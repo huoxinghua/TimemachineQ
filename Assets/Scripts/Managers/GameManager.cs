@@ -7,6 +7,7 @@ public class GameManager : Singleton<GameManager>
 {
     [SerializeField] GameObject pauseOverMenu;
     [SerializeField] GameObject winMenu;
+    [SerializeField] GameObject pauseMenu;
 
     void Start()
     {
@@ -39,8 +40,14 @@ public class GameManager : Singleton<GameManager>
 
     public void ShowRestartMenu()
     {
-        Debug.Log("show pause menu");
         gameObject.SetActive(true);
+
+    }
+
+    public void ShowPauseMenu()
+    {
+        Debug.Log("show pause menu");
+        pauseMenu.SetActive(true);
 
     }
 }

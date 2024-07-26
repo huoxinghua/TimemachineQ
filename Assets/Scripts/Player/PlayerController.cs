@@ -192,11 +192,9 @@ public class PlayerController : MonoBehaviour
 
     public void StopInStair()
     {
-        Debug.Log("player stop on stair");
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0f;
         climbSpeed = 0f;
-        Debug.Log("stop in stair gravity" + rb.gravityScale + rb.velocity + climbSpeed);
         
     }
 
@@ -241,6 +239,10 @@ public class PlayerController : MonoBehaviour
         isOnLadder = false;
         isJumping = false;
         rb.gravityScale = 1f;
+    }
+    public void ShowPause()
+    {
+        Debug.Log("get pause key");
     }
 }
 
