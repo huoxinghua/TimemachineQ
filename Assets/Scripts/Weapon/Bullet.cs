@@ -5,12 +5,22 @@ public class Bullet : PoolObject
 {
     //[SerializeField] string hitEffectName = "BigExplosion";
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-       // Explosion effect = (Explosion)PoolManager.Instance.Spawn(hitEffectName);
-        //effect.transform.position = transform.position;
-        //effect.transform.rotation = transform.rotation;
-        DeSpawn();
 
+        if (collision.gameObject.tag.Equals("Enemy"))
+        {
+            Destroy(collision.gameObject);
+            DeSpawn();
+        }
+
+        else
+        {
+            DeSpawn();
+        }
+        
+        
     }
+
+    
 }

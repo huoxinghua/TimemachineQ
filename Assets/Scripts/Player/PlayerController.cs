@@ -39,6 +39,14 @@ public class PlayerController : MonoBehaviour
 
     private float fallMultiplier;
     private float lowJumpMultiplier;
+<<<<<<< Updated upstream
+=======
+    private PlayerInputController.PlayerType currentplayerType;
+
+    [Header("Animations")]
+    [SerializeField] private Animator animator;
+
+>>>>>>> Stashed changes
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -107,6 +115,7 @@ public class PlayerController : MonoBehaviour
             if (!isJumping && (groundCheck.IsGrounded))
 
             {
+                
                 rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
                 isJumping = true;
                 rb.gravityScale = 1f;
@@ -205,11 +214,21 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+<<<<<<< Updated upstream
+=======
+        
+>>>>>>> Stashed changes
         if (collision.CompareTag("Stair"))
         {
             Debug.Log("You are done climbing");
             isLadder = false;
             isClimbing = false;
+        }
+
+        if(collision.CompareTag("Enemy"))
+        {
+            Debug.Log("Enemy Attack!!!!!");
+            GameManager.Instance.PlayerDied();
         }
     }
 }

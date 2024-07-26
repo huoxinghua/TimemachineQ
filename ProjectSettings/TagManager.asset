@@ -11,6 +11,8 @@ TagManager:
   - RedWater
   - Stair
   - MUmba
+  - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - Player
   - BluePlayer
   - RedPlayer
-  - 
+  - Enemy
   - 
   - 
   - 

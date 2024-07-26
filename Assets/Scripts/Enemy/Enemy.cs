@@ -5,7 +5,11 @@ using UnityEngine.UIElements;
 
 public class Enemy : MonoBehaviour
 {
+<<<<<<< Updated upstream
     // Start is called before the first frame update
+=======
+    [SerializeField] Transform[] movePoints;
+>>>>>>> Stashed changes
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] private int _startPosition = 0;
     [SerializeField] private int _endPosition = 1;
@@ -17,11 +21,18 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        this.transform.position = this.movePoints[0].transform.position;
+        StartCoroutine(MoveEnemy());
+
         
     }
 
     // Update is called once per frame
+<<<<<<< Updated upstream
     void Update()
+=======
+
+>>>>>>> Stashed changes
     IEnumerator MoveEnemy()
     {
         float alpha = 0.0f;
@@ -45,6 +56,7 @@ public class Enemy : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
+<<<<<<< Updated upstream
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -58,5 +70,8 @@ public class Enemy : MonoBehaviour
         }
         
         
+=======
+>>>>>>> Stashed changes
     }
+
 }

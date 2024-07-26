@@ -40,7 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2779402720002981452}
-  - component: {fileID: 867437208281949981}
   - component: {fileID: 4421910374708935607}
   - component: {fileID: 6681743482989027428}
   m_Layer: 6
@@ -66,6 +65,7 @@ Transform:
   - {fileID: 3115683450743303850}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< Updated upstream
 --- !u!212 &867437208281949981
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -118,6 +118,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+=======
+>>>>>>> Stashed changes
 --- !u!61 &4421910374708935607
 BoxCollider2D:
   m_ObjectHideFlags: 0
