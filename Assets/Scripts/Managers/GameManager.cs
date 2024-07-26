@@ -11,37 +11,32 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         pauseOverMenu.SetActive(false);
-
     }
-
-    void Update()
+    public void LoadScene()
     {
-        
+
     }
+
     public void PlayerDied()
     {
         //show Cursor
-        Debug.Log("you died");
         pauseOverMenu.SetActive(true);
         Time.timeScale = 0;
-        // ShowRestartMenu();
-
-        //Cursor.lockState = CursorLockMode.None;
-        //Cursor.visible = true;
     }
+
     public void ResetGame()
     {
         Debug.Log("restart");
         Time.timeScale = 1;
         //LoadScene();
         SceneManager.LoadScene(0);
-
-        
     }
+    
     public void QuitGame()
     {
-       Application.Quit();
+        Application.Quit();
     }
+
     public void ShowRestartMenu()
     {
         Debug.Log("show pause menu");
