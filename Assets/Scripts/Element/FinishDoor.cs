@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+    [SerializeField] GameObject doorMovePart;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-       if( collision.gameObject.CompareTag("RedPlayer") || collision.gameObject.CompareTag("BluePlayer"))
+        Debug.Log("You are in finish line");
+        if ( collision.GetComponent<PlayerController>())
         {
-            Debug.Log("You are in finish line");
+            
             GameManager.Instance.ShowWinMenu();
+            doorMovePart.SetActive(false);
         }
     }
     
