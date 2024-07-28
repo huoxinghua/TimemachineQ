@@ -8,33 +8,70 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] GameObject gameOverMenu;
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject pauseMenu;
-    [SerializeField] Rigidbody2D rb;
+   
 
-    public static GameManager instance;
+    public  GameManager instance { get; private set; }
 
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            Debug.Log("GameManager have inti");
+            DontDestroyOnLoad(gameObject);//make the instance singleton
         }
         else
         {
+            Debug.LogWarning("find another");
             Destroy(gameObject);
         }
     }
 
+
+    
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+      
+    }
 
+    //this will been called in the puzzles scene
+    public void SetUIElements(GameObject gameOver, GameObject win, GameObject pause)
+    {
+        gameOverMenu = gameOver;
         gameOverMenu.SetActive(false);
+        winMenu = win;
         winMenu.SetActive(false);
+        pauseMenu = pause;
+        pauseMenu.SetActive(false);
+    }
+
+    public void ShowGameOverMenu()
+    {
+        if (gameOverMenu != null)
+        {
+            gameOverMenu.SetActive(true);
+        }
+    }
+
+    public void ShowWinMenu()
+    {
+        if (winMenu != null)
+        {
+            winMenu.SetActive(true);
+        }
+    }
+
+    public void ShowPauseMenu()
+    {
+        if (pauseMenu != null)
+        {
+            pauseMenu.SetActive(true);
+        }
     }
     public void LoadScene()
     {
         pauseMenu.SetActive(false);
+        winMenu.SetActive(false);
         Time.timeScale = 1;
         SceneManager.LoadScene("Puzzles");
     }
@@ -57,12 +94,20 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = 0;
     }
 
+    //when the game restart need initial the state
     public void ResetGame()
     {
         Debug.Log("restart");
+     
+
+    }
+    
+    //pause menu resume button
+    public void ResumeGame()
+    {
+        Debug.Log("back to play");
         Time.timeScale = 1;
-        //LoadScene();
-        SceneManager.LoadScene(0);
+        MenuInitializer.instance.HidePauseMenu();
     }
 
 
@@ -72,14 +117,5 @@ public class GameManager : Singleton<GameManager>
 
     }
 
-    public void ShowPauseMenu()
-    {
-        Time.timeScale = 0;
-        pauseMenu.SetActive(true);
-
-    }
-    public void ShowWinMenu()
-    {
-        winMenu.SetActive(true);
-    }
+  
 }

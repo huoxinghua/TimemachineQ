@@ -9,7 +9,7 @@ public class Door : MonoBehaviour
        if( collision.gameObject.CompareTag("RedPlayer") || collision.gameObject.CompareTag("BluePlayer"))
         {
             Debug.Log("You are in finish line");
-            GameManager.instance.ShowWinMenu();
+            GameManager.Instance.ShowWinMenu();
         }
     }
     

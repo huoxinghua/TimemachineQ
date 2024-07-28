@@ -8,7 +8,7 @@ public class PlayerInputController : MonoBehaviour
 {
     #region Private Variables
     private PlayerController playerController;
-    private GameManager gameManager;
+    //private GameManager gameManager;
     public enum PlayerType { RedPlayer, BluePlayer }
     [SerializeField] private PlayerType playerType;
     #endregion
@@ -24,7 +24,7 @@ public class PlayerInputController : MonoBehaviour
     void OnEnable()
     {
         PlayerInput playerInput = new PlayerInput();
-        playerInput.Game.Pause.performed += (val) => GameManager.instance.ShowPauseMenu();
+        playerInput.Game.Pause.performed += (val) => GameManager.Instance.ShowPauseMenu();
 
         if (playerInput != null)
         {
