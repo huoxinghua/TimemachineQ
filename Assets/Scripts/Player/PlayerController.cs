@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
     public void Move(float movement)
     {
-        Debug.Log("playercontroller.move, get movement:"+movement);
+       
 
         this.movementVector.x = movement;
         rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
@@ -213,7 +213,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("You are on the Ladder");
+        
         if (collision.CompareTag("Stair"))
         {
             isOnLadder = true;
@@ -224,7 +224,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("You leave the Ladder");
+       
         if (collision.CompareTag("Stair"))
         {
           //  isOnLadder = false;

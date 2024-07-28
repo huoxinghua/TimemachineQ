@@ -18,13 +18,13 @@ public class PlayerInputController : MonoBehaviour
     void Awake()
     {
         playerController = GetComponent<PlayerController>();
-        gameManager = GetComponent<GameManager>();
+       // gameManager = GetComponent<GameManager>();
     }
 
     void OnEnable()
     {
         PlayerInput playerInput = new PlayerInput();
-        playerInput.Game.Pause.performed += (val) => playerController.ShowPause();
+        playerInput.Game.Pause.performed += (val) => GameManager.instance.ShowPauseMenu();
 
         if (playerInput != null)
         {

@@ -20,9 +20,11 @@ public class SceneLoader : MonoBehaviour
     }
   
 
-
+    
     public void PlayGame()
+
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("Puzzles");
     }
 

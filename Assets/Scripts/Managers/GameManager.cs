@@ -5,23 +5,55 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] GameObject pauseOverMenu;
+    [SerializeField] GameObject gameOverMenu;
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject pauseMenu;
+    [SerializeField] Rigidbody2D rb;
+
+    public static GameManager instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
-        pauseOverMenu.SetActive(false);
+        rb = GetComponent<Rigidbody2D>();
+
+        gameOverMenu.SetActive(false);
+        winMenu.SetActive(false);
     }
     public void LoadScene()
     {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Puzzles");
+    }
 
+
+    public void QuitGame()
+    {
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+
+        Application.Quit();
     }
 
     public void PlayerDied()
     {
         //show Cursor
-        pauseOverMenu.SetActive(true);
+        gameOverMenu.SetActive(true);
         Time.timeScale = 0;
     }
 
@@ -32,11 +64,7 @@ public class GameManager : Singleton<GameManager>
         //LoadScene();
         SceneManager.LoadScene(0);
     }
-    
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
+
 
     public void ShowRestartMenu()
     {
@@ -46,8 +74,12 @@ public class GameManager : Singleton<GameManager>
 
     public void ShowPauseMenu()
     {
-        Debug.Log("show pause menu");
+        Time.timeScale = 0;
         pauseMenu.SetActive(true);
 
+    }
+    public void ShowWinMenu()
+    {
+        winMenu.SetActive(true);
     }
 }
