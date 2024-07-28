@@ -19,7 +19,6 @@ public class Shoot : MonoBehaviour
 
     public virtual void GunShoot(float faceDirection)
     {
-        Debug.Log("GunShoot bulletPoolName:" + bulletPoolName);
         Bullet bullet = (Bullet)PoolManager.Instance.Spawn(bulletPoolName);
 
        

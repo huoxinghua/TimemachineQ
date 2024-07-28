@@ -11,8 +11,10 @@ public class PoolManager : Singleton<PoolManager>
 
     private void Start()
     {
-        PoolManager.Instance.Load();
+      //  PoolManager.Instance.Load();
+        Load();
     }
+  
 
     private void Load()
     {
@@ -67,7 +69,7 @@ public class PoolManager : Singleton<PoolManager>
         objStack.Push(poolObject);
     }
 
-
+/*
     private void ResetBulletDirection(PoolObject bullet)
     {
         bullet.transform.localRotation = Quaternion.identity; // Reset rotation
@@ -76,5 +78,5 @@ public class PoolManager : Singleton<PoolManager>
         {
             rb.velocity = Vector2.zero; // Reset velocity
         }
-    }
+    }*/
 }

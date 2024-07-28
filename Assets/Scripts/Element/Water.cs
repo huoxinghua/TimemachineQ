@@ -55,7 +55,6 @@ public class Water : MonoBehaviour
              {
                  if (var == WaterType.BlueWater)
                  {
-                    Debug.Log("kill red player");
                     GameManager.Instance.PlayerDied();
                 }
              }

@@ -45,9 +45,10 @@ public class PlayerController : MonoBehaviour
     private float lowJumpMultiplier;
     private PlayerInputController.PlayerType currentplayerType;
 
+   
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        
         groundCheck = GetComponent<GroundCheck>();
         if (gun && gunLocation) 
         {
@@ -58,6 +59,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         faceDirection = 1;
        
 
@@ -77,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+
         //renew the rb when on Stair
         if (isOnLadder)
         {
@@ -94,11 +96,13 @@ public class PlayerController : MonoBehaviour
 
     public void Move(float movement)
     {
-        Debug.Log("playercontroller.move, get movement:"+movement);
-
         this.movementVector.x = movement;
-        rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
-        rb.gravityScale = 1f;
+        if (rb != null)
+        {
+            rb.velocity = new Vector2(movementVector.x * speed, rb.velocity.y);
+            rb.gravityScale = 1f;
+
+        }
 
         if (movementVector.x > 0)
         {
@@ -213,7 +217,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("You are on the Ladder");
+        
         if (collision.CompareTag("Stair"))
         {
             isOnLadder = true;
@@ -224,7 +228,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("You leave the Ladder");
+       
         if (collision.CompareTag("Stair"))
         {
           //  isOnLadder = false;
