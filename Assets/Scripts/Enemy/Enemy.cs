@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Enemy : MonoBehaviour
 {
@@ -12,19 +10,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int _startPosition = 0;
     [SerializeField] private int _endPosition = 1;
     private float _minTargetDistance = 0.01f;
-    private PlayerController playerController;
     private Rigidbody2D rb;
-    private GameManager gameManager;
 
 
     void Start()
     {
         this.transform.position = this.movePoints[0].transform.position;
         StartCoroutine(MoveEnemy());
-
-        
     }
-
 
     IEnumerator MoveEnemy()
     {
@@ -48,16 +41,13 @@ public class Enemy : MonoBehaviour
                     );
             yield return new WaitForFixedUpdate();
         }
-
-
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
-        if(other.GetComponent<PlayerController>())
+        if (other.GetComponent<PlayerController>())
         {
-            Debug.Log("Enemy attack");
+            GameManager.Instance.ShowGameOverMenu();
             //GameManager.Instance.PlayerDied();
             gameObject.SetActive(false);
         }

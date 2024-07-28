@@ -30,7 +30,7 @@ public class SceneLoader : MonoBehaviour
             Debug.Log("GameManager instance found.");
             GameManager.Instance.ResetGame();
             Time.timeScale = 1;
-            SceneManager.LoadScene("Puzzles");
+            SceneManager.LoadScene("Puzzles1");
         }
         else
         {

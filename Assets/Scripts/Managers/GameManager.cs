@@ -67,13 +67,14 @@ public class GameManager : Singleton<GameManager>
         {
             pauseMenu.SetActive(true);
         }
+        Time.timeScale = 0f;
     }
     public void LoadScene()
     {
         pauseMenu.SetActive(false);
         winMenu.SetActive(false);
         Time.timeScale = 1;
-        SceneManager.LoadScene("Puzzles");
+        SceneManager.LoadScene("Puzzles1");
     }
 
 
