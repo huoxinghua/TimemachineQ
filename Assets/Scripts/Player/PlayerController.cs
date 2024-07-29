@@ -106,6 +106,7 @@ public class PlayerController : MonoBehaviour
 
         if (movementVector.x > 0)
         {
+
             visuals.localScale = new Vector3(1, 1, 1);
             faceDirection = movement;
         }
