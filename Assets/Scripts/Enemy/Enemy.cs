@@ -51,9 +51,5 @@ public class Enemy : MonoBehaviour
             //GameManager.Instance.PlayerDied();
             gameObject.SetActive(false);
         }
-        
-        
-
     }
-
 }

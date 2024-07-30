@@ -45,11 +45,16 @@ public class PlayerController : MonoBehaviour
     private float lowJumpMultiplier;
     private PlayerInputController.PlayerType currentplayerType;
 
-   
+
+    [Header("Animations")]
+    [SerializeField] private Animator animator;
+
+
+
     void Awake()
     {
-        
         groundCheck = GetComponent<GroundCheck>();
+
         if (gun && gunLocation) 
         {
             weapon = Instantiate(gun, gunLocation);
@@ -59,6 +64,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+
         rb = GetComponent<Rigidbody2D>();
         faceDirection = 1;
        
@@ -75,8 +81,30 @@ public class PlayerController : MonoBehaviour
         }
         playerInputController = GetComponent<PlayerInputController>();
 
+
     }
 
+    private void Update()
+    {
+        
+
+        var velocity = rb.velocity;
+        velocity.y = 0;
+
+        if(rb.velocity.magnitude < 0.1f)
+        {
+            animator.SetBool("IsWalking", false);
+            animator.SetBool("isGround", groundCheck.IsGrounded);
+        }
+
+        if (rb.velocity.magnitude > 0.1f)
+        {
+
+            animator.SetBool("IsWalking", true);
+        }
+
+        return;
+    }
     private void FixedUpdate()
     {
 
@@ -140,8 +168,11 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-       
-        if( rb != null )
+        if (!groundCheck.IsGrounded) return;
+
+        animator.SetTrigger("jump");
+
+        if ( rb != null )
         {
             if (groundCheck.IsGrounded && !isJumping)
 
@@ -181,7 +212,8 @@ public class PlayerController : MonoBehaviour
 
     public void StairMove(float movementUp)
     {
-       
+        
+
         Debug.Log("Stair Move begin");
     
         this.movementVector.y = movementUp;
@@ -221,10 +253,15 @@ public class PlayerController : MonoBehaviour
         
         if (collision.CompareTag("Stair"))
         {
+            animator.SetBool("IsWalking", false);
+            animator.SetBool("isGround", groundCheck.IsGrounded);
+
             isOnLadder = true;
             isJumping = false;
             
         }
+
+       
     }
 
     private void OnTriggerExit2D(Collider2D collision)

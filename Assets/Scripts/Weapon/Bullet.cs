@@ -10,6 +10,7 @@ public class Bullet : PoolObject
 
         if (collision.gameObject.tag.Equals("Enemy"))
         {
+            Debug.Log("Dieeeeeee");
             Destroy(collision.gameObject);
             DeSpawn();
         }
