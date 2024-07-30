@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("visual part of player to Flip")]
     [SerializeField] public Transform visuals;
+    public float faceDirection;
     public string currentMovePlayer;
     [SerializeField] PlayerInputController playerInputController;
     
