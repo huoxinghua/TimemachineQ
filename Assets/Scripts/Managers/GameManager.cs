@@ -87,7 +87,7 @@ public class GameManager : Singleton<GameManager>
 
         Application.Quit();
     }
-
+    
     public void PlayerDied()
     {
         //show Cursor

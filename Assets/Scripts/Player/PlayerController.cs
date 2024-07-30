@@ -13,9 +13,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("visual part of player to Flip")]
     [SerializeField] public Transform visuals;
-    public float faceDirection;
-    //public float RedfaceDirection;
-    //public float BluefaceDirection;
     public string currentMovePlayer;
     [SerializeField] PlayerInputController playerInputController;
     
@@ -132,9 +129,9 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        //this is for flip the player when left and right
         if (movementVector.x > 0)
         {
-
             visuals.localScale = new Vector3(1, 1, 1);
             faceDirection = movement;
         }
@@ -151,20 +148,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    //private string CheckPlayerType()
-    //{
-    //    if (this.CompareTag("RedPlayer"))
-    //    {
-           
-    //        return "RedPlayer";
-    //    }
-    //    else//now is blue player
-    //    {
-           
-    //        return "Blue Player";
-    //    }
-        
-    //}
 
     public void Jump()
     {
@@ -229,8 +212,12 @@ public class PlayerController : MonoBehaviour
 
     public void StopInStair()
     {
-        rb.velocity = Vector2.zero;
-        rb.gravityScale = 0f;
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.gravityScale = 0f;
+        }
+      
         climbSpeed = 0f;
         
     }
@@ -240,9 +227,6 @@ public class PlayerController : MonoBehaviour
         this.transform.parent = newParent;
     }
 
-   
-   
-  
     public void Die()
     {
         //pause the game 

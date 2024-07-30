@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MenuInitializer : MonoBehaviour
+public class MenueInitializer : MonoBehaviour
 {
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private GameObject winMenu;
     [SerializeField] private GameObject pauseMenu;
 
 
-    public static MenuInitializer instance { get; private set; }
+    public static MenueInitializer instance { get; private set; }
     private void Awake()
     {
         if (instance == null)

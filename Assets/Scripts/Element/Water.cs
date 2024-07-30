@@ -37,9 +37,6 @@ public class Water : MonoBehaviour
        
         if (collision.gameObject.CompareTag("BluePlayer"))
         {
-           
-            //PlayerController.D
-
              foreach (WaterType var in waterType)
              {
                  if((var == WaterType.RedWater))
