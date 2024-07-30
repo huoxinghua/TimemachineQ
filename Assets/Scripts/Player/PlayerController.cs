@@ -13,9 +13,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("visual part of player to Flip")]
     [SerializeField] public Transform visuals;
-    public float faceDirection;
-    //public float RedfaceDirection;
-    //public float BluefaceDirection;
     public string currentMovePlayer;
     [SerializeField] PlayerInputController playerInputController;
     
@@ -45,11 +42,16 @@ public class PlayerController : MonoBehaviour
     private float lowJumpMultiplier;
     private PlayerInputController.PlayerType currentplayerType;
 
-   
+
+    [Header("Animations")]
+    [SerializeField] private Animator animator;
+
+
+
     void Awake()
     {
-        
         groundCheck = GetComponent<GroundCheck>();
+
         if (gun && gunLocation) 
         {
             weapon = Instantiate(gun, gunLocation);
@@ -59,6 +61,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+
         rb = GetComponent<Rigidbody2D>();
         faceDirection = 1;
        
@@ -75,8 +78,30 @@ public class PlayerController : MonoBehaviour
         }
         playerInputController = GetComponent<PlayerInputController>();
 
+
     }
 
+    private void Update()
+    {
+        
+
+        var velocity = rb.velocity;
+        velocity.y = 0;
+
+        if(rb.velocity.magnitude < 0.1f)
+        {
+            animator.SetBool("IsWalking", false);
+            animator.SetBool("isGround", groundCheck.IsGrounded);
+        }
+
+        if (rb.velocity.magnitude > 0.1f)
+        {
+
+            animator.SetBool("IsWalking", true);
+        }
+
+        return;
+    }
     private void FixedUpdate()
     {
 
@@ -104,9 +129,9 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        //this is for flip the player when left and right
         if (movementVector.x > 0)
         {
-
             visuals.localScale = new Vector3(1, 1, 1);
             faceDirection = movement;
         }
@@ -123,25 +148,14 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    //private string CheckPlayerType()
-    //{
-    //    if (this.CompareTag("RedPlayer"))
-    //    {
-           
-    //        return "RedPlayer";
-    //    }
-    //    else//now is blue player
-    //    {
-           
-    //        return "Blue Player";
-    //    }
-        
-    //}
 
     public void Jump()
     {
-       
-        if( rb != null )
+        if (!groundCheck.IsGrounded) return;
+
+        animator.SetTrigger("jump");
+
+        if ( rb != null )
         {
             if (groundCheck.IsGrounded && !isJumping)
 
@@ -181,7 +195,8 @@ public class PlayerController : MonoBehaviour
 
     public void StairMove(float movementUp)
     {
-       
+        
+
         Debug.Log("Stair Move begin");
     
         this.movementVector.y = movementUp;
@@ -197,8 +212,12 @@ public class PlayerController : MonoBehaviour
 
     public void StopInStair()
     {
-        rb.velocity = Vector2.zero;
-        rb.gravityScale = 0f;
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.gravityScale = 0f;
+        }
+      
         climbSpeed = 0f;
         
     }
@@ -208,9 +227,6 @@ public class PlayerController : MonoBehaviour
         this.transform.parent = newParent;
     }
 
-   
-   
-  
     public void Die()
     {
         //pause the game 
@@ -221,10 +237,15 @@ public class PlayerController : MonoBehaviour
         
         if (collision.CompareTag("Stair"))
         {
+            animator.SetBool("IsWalking", false);
+            animator.SetBool("isGround", groundCheck.IsGrounded);
+
             isOnLadder = true;
             isJumping = false;
             
         }
+
+       
     }
 
     private void OnTriggerExit2D(Collider2D collision)
