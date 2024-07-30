@@ -245,8 +245,6 @@ public class PlayerController : MonoBehaviour
             isJumping = false;
             
         }
-
-       
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -266,10 +264,6 @@ public class PlayerController : MonoBehaviour
         isOnLadder = false;
         isJumping = false;
         rb.gravityScale = 1f;
-    }
-    public void ShowPause()
-    {
-        Debug.Log("get pause key");
     }
 }
 
