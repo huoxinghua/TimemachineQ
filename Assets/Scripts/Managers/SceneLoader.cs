@@ -27,10 +27,21 @@ public class SceneLoader : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
-            Debug.Log("GameManager instance found.");
             GameManager.Instance.ResetGame();
             Time.timeScale = 1;
             SceneManager.LoadScene("Puzzles1");
+        }
+        else
+        {
+            Debug.LogError("GameManager instance is not initialized.");
+        }
+    }
+    public void LoadController()
+
+    {
+        if (GameManager.Instance != null)
+        {
+            SceneManager.LoadScene("Controller");
         }
         else
         {
