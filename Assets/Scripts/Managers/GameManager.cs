@@ -5,47 +5,118 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] GameObject pauseOverMenu;
+    [SerializeField] GameObject gameOverMenu;
     [SerializeField] GameObject winMenu;
+    [SerializeField] GameObject pauseMenu;
+   
 
+    public  GameManager instance { get; private set; }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            Debug.Log("GameManager have inti");
+            DontDestroyOnLoad(gameObject);//make the instance singleton
+        }
+        else
+        {
+            Debug.LogWarning("find another");
+            Destroy(gameObject);
+        }
+    }
+
+
+    
     void Start()
     {
-        pauseOverMenu.SetActive(false);
-
+      
     }
 
-    void Update()
+    //this will been called in the puzzles scene
+    public void SetUIElements(GameObject gameOver, GameObject win, GameObject pause)
     {
-        
+        gameOverMenu = gameOver;
+        gameOverMenu.SetActive(false);
+        winMenu = win;
+        winMenu.SetActive(false);
+        pauseMenu = pause;
+        pauseMenu.SetActive(false);
     }
+
+    public void ShowGameOverMenu()
+    {
+        if (gameOverMenu != null)
+        {
+            gameOverMenu.SetActive(true);
+        }
+    }
+
+    public void ShowWinMenu()
+    {
+        if (winMenu != null)
+        {
+            winMenu.SetActive(true);
+        }
+    }
+
+    public void ShowPauseMenu()
+    {
+        if (pauseMenu != null)
+        {
+            pauseMenu.SetActive(true);
+        }
+        Time.timeScale = 0f;
+    }
+    public void LoadScene()
+    {
+        pauseMenu.SetActive(false);
+        winMenu.SetActive(false);
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Puzzles1");
+    }
+
+
+    public void QuitGame()
+    {
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+
+        Application.Quit();
+    }
+    
     public void PlayerDied()
     {
         //show Cursor
-        Debug.Log("you died");
-        pauseOverMenu.SetActive(true);
+        gameOverMenu.SetActive(true);
         Time.timeScale = 0;
-        // ShowRestartMenu();
-
-        //Cursor.lockState = CursorLockMode.None;
-        //Cursor.visible = true;
     }
+
+    //when the game restart need initial the state
     public void ResetGame()
     {
         Debug.Log("restart");
-        Time.timeScale = 1;
-        //LoadScene();
-        SceneManager.LoadScene(0);
+     
 
-        
     }
-    public void QuitGame()
+    
+    //pause menu resume button
+    public void ResumeGame()
     {
-       Application.Quit();
+        Debug.Log("back to play");
+        Time.timeScale = 1;
+        MenuInitializer.instance.HidePauseMenu();
     }
+
+
     public void ShowRestartMenu()
     {
-        Debug.Log("show pause menu");
         gameObject.SetActive(true);
 
     }
+
+  
 }

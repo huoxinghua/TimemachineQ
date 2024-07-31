@@ -8,9 +8,8 @@ public class Water : MonoBehaviour
     public enum WaterType { RedWater, BlueWater }
     [SerializeField] private WaterType[] waterType;
     private PlayerController playerController;
-    private Rigidbody2D rb;
+    private Rigidbody2D rb;// do not delete this
     public float jumpForce = 10f;
-    private GameManager gameManager;
 
     #region  UI when die player
     [SerializeField] private GameObject pauseMenu;
@@ -24,7 +23,6 @@ public class Water : MonoBehaviour
             rb = playerController.GetComponent<Rigidbody2D>();
         }
         rb = GetComponent<Rigidbody2D>();
-     
     }
 
     private WaterType[] GetWaterType()
@@ -37,9 +35,6 @@ public class Water : MonoBehaviour
        
         if (collision.gameObject.CompareTag("BluePlayer"))
         {
-           
-            //PlayerController.D
-
              foreach (WaterType var in waterType)
              {
                  if((var == WaterType.RedWater))
@@ -55,7 +50,6 @@ public class Water : MonoBehaviour
              {
                  if (var == WaterType.BlueWater)
                  {
-                    Debug.Log("kill red player");
                     GameManager.Instance.PlayerDied();
                 }
              }

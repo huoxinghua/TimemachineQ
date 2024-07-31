@@ -11,6 +11,7 @@ TagManager:
   - RedWater
   - Stair
   - MUmba
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -53,9 +54,6 @@ TagManager:
     locked: 0
   - name: ground
     uniqueID: 570859357
-    locked: 0
-  - name: Frame
-    uniqueID: 3905365039
     locked: 0
   - name: Element
     uniqueID: 288980737
