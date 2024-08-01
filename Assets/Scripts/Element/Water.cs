@@ -32,7 +32,7 @@ public class Water : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-       
+        //kill Blue player
         if (collision.gameObject.CompareTag("BluePlayer"))
         {
              foreach (WaterType var in waterType)
@@ -40,11 +40,12 @@ public class Water : MonoBehaviour
                  if((var == WaterType.RedWater))
                  {
                     GameManager.Instance.PlayerDied();
-                    Debug.Log("kill Blue player");
+                   
                  }
              }
          }
-         else if (collision.gameObject.CompareTag("RedPlayer"))
+        //kill red player
+        else if (collision.gameObject.CompareTag("RedPlayer"))
          {
              foreach (WaterType var in waterType)
              {

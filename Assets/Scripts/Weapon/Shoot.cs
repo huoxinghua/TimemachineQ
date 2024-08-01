@@ -21,9 +21,13 @@ public class Shoot : MonoBehaviour
     {
         Bullet bullet = (Bullet)PoolManager.Instance.Spawn(bulletPoolName);
 
-       
 
-        bullet.transform.position = firePoint.transform.position;
+        if (firePoint != null)
+        { bullet.transform.position = firePoint.transform.position; }
+        else
+        {
+            Debug.LogWarning("firePoint is null.");
+        }
 
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 

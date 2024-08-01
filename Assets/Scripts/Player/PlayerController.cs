@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -131,16 +132,24 @@ public class PlayerController : MonoBehaviour
         }
 
         //this is for flip the player when left and right
-        if (movementVector.x > 0)
+        if (visuals != null)
         {
-            visuals.localScale = new Vector3(1, 1, 1);
-            faceDirection = movement;
+            if (movementVector.x > 0)
+            {
+                visuals.localScale = new Vector3(1, 1, 1);
+                faceDirection = movement;
+            }
+            else if (movementVector.x < 0)
+            {
+                visuals.localScale = new Vector3(-1, 1, 1);
+                faceDirection = movement;
+            }
         }
-        else if (movementVector.x < 0)
+        else
         {
-            visuals.localScale = new Vector3(-1, 1, 1);
-            faceDirection = movement;
+            Debug.LogWarning("Visuals reference is null.");
         }
+
     }
 
     public void PlayerShoot()
@@ -154,7 +163,15 @@ public class PlayerController : MonoBehaviour
     {
         if (!groundCheck.IsGrounded) return;
 
-        animator.SetTrigger("jump");
+        if (animator != null)
+        {
+            animator.SetTrigger("jump");
+        }
+        else
+        {
+            Debug.LogWarning("Animator is null. Cannot trigger Jump animation.");
+        }
+       
 
         if ( rb != null )
         {
@@ -196,10 +213,7 @@ public class PlayerController : MonoBehaviour
 
     public void StairMove(float movementUp)
     {
-        
-
-        Debug.Log("Stair Move begin");
-    
+       // Stair Move begin
         this.movementVector.y = movementUp;
         climbSpeed = 2f;
     }
@@ -208,7 +222,6 @@ public class PlayerController : MonoBehaviour
     public void JumpReleased()
     {
         isJumping = false;
-       
     }
 
     public void StopInStair()
@@ -252,12 +265,10 @@ public class PlayerController : MonoBehaviour
        
         if (collision.CompareTag("Stair"))
         {
-          //  isOnLadder = false;
-           // isJumping = false;
             StartCoroutine(RestoreGravity());
-
         }
     }
+
     private IEnumerator RestoreGravity()
     {
         yield return new WaitForSeconds(0.2f); // Adjust the delay time as needed

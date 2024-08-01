@@ -12,13 +12,10 @@ public class PlayerInputController : MonoBehaviour
     public enum PlayerType { RedPlayer, BluePlayer }
     [SerializeField] private PlayerType playerType;
     #endregion
-
-    //private bool CanMoveUp = false;
-    //private bool canMoveUp = false;
+  
     void Awake()
     {
         playerController = GetComponent<PlayerController>();
-       // gameManager = GetComponent<GameManager>();
     }
 
     void OnEnable()
@@ -74,6 +71,9 @@ public class PlayerInputController : MonoBehaviour
             }
         }
     }
+ 
+
+   
 
     public PlayerType GetPlayerType()
     {
