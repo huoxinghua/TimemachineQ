@@ -238,7 +238,10 @@ public class PlayerController : MonoBehaviour
 
     public void AttachToParent(Transform newParent)
     {
-        this.transform.parent = newParent;
+        
+         this.transform.parent = newParent; 
+       
+       
     }
 
     public void Die()
