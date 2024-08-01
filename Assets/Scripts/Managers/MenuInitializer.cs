@@ -7,6 +7,7 @@ public class MenuInitializer : MonoBehaviour
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private GameObject winMenu;
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject optionMenu;
 
 
     public static MenuInitializer instance { get; private set; }
@@ -27,7 +28,7 @@ public class MenuInitializer : MonoBehaviour
         // Ensure the GameManager instance exists
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.SetUIElements(gameOverMenu, winMenu, pauseMenu);
+            GameManager.Instance.SetUIElements(gameOverMenu, winMenu, pauseMenu,optionMenu);
         }
         else
         {

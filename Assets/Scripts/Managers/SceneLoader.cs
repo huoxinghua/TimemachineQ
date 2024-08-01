@@ -8,7 +8,7 @@ public class SceneLoader : MonoBehaviour
 {
     public static SceneLoader Instance { get; private set; }
     private string _currentScene = "";
-    private GameManager _gameManager;
+   // private GameManager _gameManager;
 
     private void Awake()
     {
@@ -36,18 +36,7 @@ public class SceneLoader : MonoBehaviour
             Debug.LogError("GameManager instance is not initialized.");
         }
     }
-    public void LoadController()
-
-    {
-        if (GameManager.Instance != null)
-        {
-            SceneManager.LoadScene("Controller");
-        }
-        else
-        {
-            Debug.LogError("GameManager instance is not initialized.");
-        }
-    }
+ 
 
     public void QuitGame()
     {

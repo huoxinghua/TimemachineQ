@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PoolManager : Singleton<PoolManager>
 {
     [SerializeField] private PoolObject[] poolObjects;
@@ -11,7 +12,6 @@ public class PoolManager : Singleton<PoolManager>
 
     private void Start()
     {
-      //  PoolManager.Instance.Load();
         Load();
     }
   

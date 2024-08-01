@@ -8,8 +8,8 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] GameObject gameOverMenu;
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject pauseMenu;
-   
-
+    [SerializeField] GameObject optionMenu;
+    
     public  GameManager instance { get; private set; }
 
     private void Awake()
@@ -17,7 +17,7 @@ public class GameManager : Singleton<GameManager>
         if (instance == null)
         {
             instance = this;
-            Debug.Log("GameManager have inti");
+            //GameManager have inti
             DontDestroyOnLoad(gameObject);//make the instance singleton
         }
         else
@@ -28,14 +28,8 @@ public class GameManager : Singleton<GameManager>
     }
 
 
-    
-    void Start()
-    {
-      
-    }
-
     //this will been called in the puzzles scene
-    public void SetUIElements(GameObject gameOver, GameObject win, GameObject pause)
+    public void SetUIElements(GameObject gameOver, GameObject win, GameObject pause,GameObject option)
     {
         gameOverMenu = gameOver;
         gameOverMenu.SetActive(false);
@@ -43,6 +37,8 @@ public class GameManager : Singleton<GameManager>
         winMenu.SetActive(false);
         pauseMenu = pause;
         pauseMenu.SetActive(false);
+        optionMenu = option;
+        optionMenu.SetActive(false);
     }
 
     public void ShowGameOverMenu()
@@ -63,11 +59,20 @@ public class GameManager : Singleton<GameManager>
 
     public void ShowPauseMenu()
     {
+       
         if (pauseMenu != null)
         {
             pauseMenu.SetActive(true);
         }
         Time.timeScale = 0f;
+    }
+    public void ShowOptionMenu()
+    {
+        pauseMenu.SetActive(false);
+        if (winMenu != null)
+        {
+            optionMenu.SetActive(true);
+        }
     }
     public void LoadScene()
     {
@@ -95,28 +100,34 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = 0;
     }
 
+
+    void HideAllTheMenu()
+    {
+      
+       //ameOverMenu.SetActive(false); 
+        
+      //optionMenu.SetActive(false);
+      //pauseMenu.SetActive(false);
+       // winMenu.SetActive(false);
+    }
+
     //when the game restart need initial the state
     public void ResetGame()
     {
-        Debug.Log("restart");
-     
-
+        // PoolManager.Instance.Spawn(string objName);
+      
+        HideAllTheMenu();
     }
-    
+
     //pause menu resume button
     public void ResumeGame()
     {
-        Debug.Log("back to play");
         Time.timeScale = 1;
         MenuInitializer.instance.HidePauseMenu();
     }
 
 
-    public void ShowRestartMenu()
-    {
-        gameObject.SetActive(true);
-
-    }
+ 
 
   
 }

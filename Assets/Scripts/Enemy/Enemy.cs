@@ -45,12 +45,14 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("encounter enemy");
+        //encounter player will make player die
         if (other.GetComponent<PlayerController>())
         {
+            //can add animation of die
+
+            Time.timeScale = 0;
             GameManager.Instance.ShowGameOverMenu();
-            //GameManager.Instance.PlayerDied();
-            gameObject.SetActive(false);
+            
         }
     }
 }
