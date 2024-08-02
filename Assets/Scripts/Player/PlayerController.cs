@@ -276,7 +276,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator RestoreGravity()
     {
-        yield return new WaitForSeconds(1f); // Adjust the delay time as needed
+        yield return new WaitForSeconds(0.2f); // Adjust the delay time as needed
         isOnLadder = false;
         isJumping = false;
         rb.gravityScale = 1f;
