@@ -42,15 +42,21 @@ public class Enemy : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
     }
-
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         //make player die when encouter
-        if (other.CompareTag("RedPlayer")|| other.CompareTag("BluePlayer"))
+        
+       
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag.Equals("RedPlayer") || collision.gameObject.tag.Equals("BluePlayer"))
         {
             Time.timeScale = 0;
             GameManager.Instance.ShowGameOverMenu();
+            Debug.Log("Enemy is here");
         }
-       
     }
 }
