@@ -70,9 +70,17 @@ public class GameManager : Singleton<GameManager>
         }
         Time.timeScale = 0f;
     }
+
+    public void HidePauseMenu()
+    {
+        if (pauseMenu != null)
+        { pauseMenu.SetActive(true); }
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1;
+    }
     public void ShowOptionMenu()
     {
-        pauseMenu.SetActive(false);
+       
         if (winMenu != null)
         {
             optionMenu.SetActive(true);
@@ -105,30 +113,20 @@ public class GameManager : Singleton<GameManager>
     }
 
 
-    void HideAllTheMenu()
-    {
-      
-       //ameOverMenu.SetActive(false); 
-        
-      //optionMenu.SetActive(false);
-      //pauseMenu.SetActive(false);
-       // winMenu.SetActive(false);
-    }
-
     //when the game restart need initial the state
     public void ResetGame()
     {
-        // PoolManager.Instance.Spawn(string objName);
-      
-        HideAllTheMenu();
+        if (optionMenu != null)
+        { optionMenu.SetActive(false); }
+        if (gameOverMenu != null)
+        { gameOverMenu.SetActive(false); }
+        if (pauseMenu != null)
+        { pauseMenu.SetActive(false); }
+        Time.timeScale = 1;
     }
 
     //pause menu resume button
-    public void ResumeGame()
-    {
-        Time.timeScale = 1;
-        MenuInitializer.instance.HidePauseMenu();
-    }
+  
 
 
  

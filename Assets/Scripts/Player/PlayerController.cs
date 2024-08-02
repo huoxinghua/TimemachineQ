@@ -226,7 +226,6 @@ public class PlayerController : MonoBehaviour
 
     public void StopInStair()
     {
-        Debug.Log("STOP IN STAIR");
         if (rb != null)
         {
             rb.velocity = Vector2.zero;
@@ -247,14 +246,13 @@ public class PlayerController : MonoBehaviour
     {
         //pause the game 
     }
-
+    //player on stair
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
         if (collision.CompareTag("Stair"))
         {
-            animator.SetBool("IsWalking", false);
-            animator.SetBool("isGround", groundCheck.IsGrounded);
+             animator.SetBool("IsWalking", true);
+             animator.SetBool("isGround", !groundCheck.IsGrounded);
 
             isOnLadder = true;
             isJumping = false;
@@ -262,12 +260,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //player leave stair
     private void OnTriggerExit2D(Collider2D collision)
     {
        
         if (collision.CompareTag("Stair"))
         {
-            StartCoroutine(RestoreGravity());
+            if (gameObject.activeInHierarchy)
+            {
+                StartCoroutine(RestoreGravity());
+            }
+           
         }
     }
 
