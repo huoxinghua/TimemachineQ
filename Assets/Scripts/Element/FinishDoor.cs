@@ -4,16 +4,25 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    [SerializeField] GameObject doorMovePart;
+    public GameObject RequiredPlayer;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //You are in finish line
-        if ( collision.GetComponent<PlayerController>())
+        if ( collision.GetComponent<PlayerController>() && collision.gameObject == RequiredPlayer)
         {
-            
+            var cat = RequiredPlayer.GetComponent<PlayerController>();
+            cat.enabled = false;
             GameManager.Instance.ShowWinMenu();
-            doorMovePart.SetActive(false);
         }
     }
-    
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        //You are in finish line
+        if (collision.GetComponent<PlayerController>() && collision.gameObject == RequiredPlayer)
+        {
+            GameManager.Instance.Winners--;
+        }
+    }
+
 }

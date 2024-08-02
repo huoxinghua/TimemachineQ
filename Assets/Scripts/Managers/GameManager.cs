@@ -49,8 +49,12 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public int Winners = 0;
     public void ShowWinMenu()
     {
+        Winners++;
+
+        if(Winners != 2) { return;  }
         if (winMenu != null)
         {
             winMenu.SetActive(true);

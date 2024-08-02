@@ -226,14 +226,13 @@ public class PlayerController : MonoBehaviour
 
     public void StopInStair()
     {
+        Debug.Log("STOP IN STAIR");
         if (rb != null)
         {
             rb.velocity = Vector2.zero;
             rb.gravityScale = 0f;
         }
-      
         climbSpeed = 0f;
-        
     }
 
     public void AttachToParent(Transform newParent)
@@ -274,7 +273,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator RestoreGravity()
     {
-        yield return new WaitForSeconds(2f); // Adjust the delay time as needed
+        yield return new WaitForSeconds(1f); // Adjust the delay time as needed
         isOnLadder = false;
         isJumping = false;
         rb.gravityScale = 1f;
